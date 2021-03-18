@@ -7,7 +7,7 @@ namespace NexusApi.Models
 {
     public class UserModel: User
     {
-        public UserSession session { get; set; }
-        public CTeam team { get; set; }
+        public int session_type { get; set; }
+        public string team_name { get; set; }
     }
 }

@@ -52,11 +52,13 @@ namespace NexusApi.Services
 
             if (user.session_id > 0)
             {
-                usermodel.session = await _context.UserSesion.FindAsync(user.session_id);
+                var session = await _context.UserSesion.FindAsync(user.session_id);
+                usermodel.session_type = session.type;
             }
             if (user.team_id > 0)
             {
-                usermodel.team = await _context.CTeams.FindAsync(user.team_id);
+                var team = await _context.CTeams.FindAsync(user.team_id);
+                usermodel.team_name = team.name;
             }
 
             return usermodel;
