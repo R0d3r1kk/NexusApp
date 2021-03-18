@@ -11,5 +11,6 @@ namespace NexusApi.Interfaces
     {
         Task<UserModel> Get(NexusContext context, int id);
         Task<bool> Add(NexusContext context, User request);
+        Task<bool> createLog(NexusContext context, Logs request);
     }
 }

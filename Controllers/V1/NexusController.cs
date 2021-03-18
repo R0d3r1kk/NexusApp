@@ -5,6 +5,7 @@ using NexusApi.Interfaces;
 using System.Threading.Tasks;
 using NexusApi.Filters;
 using Newtonsoft.Json;
+using System;
 
 namespace NexusApi.Controllers.V1
 {
@@ -32,17 +33,39 @@ namespace NexusApi.Controllers.V1
         {
             string body = HttpContext.Items["request_body"].ToString();
             //var request = JsonConvert.DeserializeObject<>(body);
+            Logs log = null;
             var id = 0;
             try
             {
                 var user = await _userService.Get(_context, id);
-                if (user == null)
-                    return NotFound();
 
-                return user;
+                log = new Logs()
+                {
+                    action = Actions.USER_GET,
+                    log_type = (int)LogType.API,
+                    date = DateTime.Now,
+                    message = user == null ? "User not found" : "User succesfully founded",
+                    user_id = id
+                };
+
+                await _userService.createLog(_context, log);
+
+                if (user != null)
+                    return Created("User", user);
+                else
+                    return NotFound();
             }
             catch (System.Exception ex)
             {
+                await _userService.createLog(_context, new Logs()
+                {
+                    action = $"{Actions.USER_GET}_EXCEPTION[TYPE: {ex.GetType().Name}]",
+                    log_type = (int)LogType.API,
+                    date = DateTime.Now,
+                    message = ex.StackTrace,
+                    user_id = id
+                });
+
                 return Conflict(ex.StackTrace);
             }
         }

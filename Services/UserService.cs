@@ -2,8 +2,6 @@
 using NexusApi.Interfaces;
 using NexusApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace NexusApi.Services
@@ -17,6 +15,23 @@ namespace NexusApi.Services
             try
             {
                 _context.User.Add(request);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<bool> createLog(NexusContext _context, Logs request)
+        {
+            if (request == null)
+                return false;
+
+            try
+            {
+                _context.Logs.Add(request);
                 await _context.SaveChangesAsync();
                 return true;
             }
