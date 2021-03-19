@@ -21,7 +21,15 @@ namespace NexusApi.Filters
             {
                 var base64 = await reader.ReadToEndAsync().ConfigureAwait(false);
                 //validate request parameters
-                body = CryptoHelper.Decrypt(base64, GlobalSettings.Key, GlobalSettings.Key.Substring(0, 16));
+                try
+                {
+                    body = CryptoHelper.Decrypt(base64, GlobalSettings.Key, GlobalSettings.Key.Substring(0, 16));
+                }
+                catch
+                {
+                    body = base64;
+                }
+
                 context.HttpContext.Items.Add("request_body", body);
             }
         }

@@ -17,6 +17,10 @@ namespace NexusApi.Models
         public const string USER_CREATE = "USER_CREATE";
         public const string USER_UPDATE = "USER_UPDATE";
         public const string USER_DELETE = "USER_DELETE";
+        public const string ACCOUNT_GET = "ACCOUNT_GET";
+        public const string ACCOUNT_CREATE = "ACCOUNT_CREATE";
+        public const string ACCOUNT_UPDATE = "ACCOUNT_UPDATE";
+        public const string ACCOUNT_DELETE = "ACCOUNT_DELETE";
         public const string TEAM_GET = "TEAM_GET";
         public const string TEAM_CREATE = "TEAM_CREATE";
         public const string TEAM_UPDATE = "TEAM_UPDATE";

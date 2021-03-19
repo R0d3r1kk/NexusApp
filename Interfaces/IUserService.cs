@@ -10,7 +10,10 @@ namespace NexusApi.Interfaces
     public interface IUserService
     {
         Task<UserModel> Get(NexusContext context, int id);
-        Task<bool> Add(NexusContext context, User request);
+        Task<bool> Add(NexusContext context, Users request);
+        Task<bool> Edit(NexusContext context, Users request);
+        Task<bool> Remove(NexusContext context, int id);
         Task<bool> createLog(NexusContext context, Logs request);
+        Task<bool> changeUserTeam(NexusContext context, ChangeTeamRequest request);
     }
 }

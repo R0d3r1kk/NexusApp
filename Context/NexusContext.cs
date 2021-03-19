@@ -10,9 +10,11 @@ namespace NexusApi.Context
         {
         }
 
-        public DbSet<User> User { get; set; }
+        public DbSet<Users> Users { get; set; }
         public DbSet<UserSession> UserSesion { get; set; }
+        public DbSet<Accounts> Accounts { get; set; }
         public DbSet<CTeam> CTeams { get; set; }
         public DbSet<Logs> Logs { get; set; }
+        
     }
 }

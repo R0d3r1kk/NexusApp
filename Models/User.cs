@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace NexusApi.Models
 {
-    public class User
+    public class Users
     {
+        [Key]
         public int user_id { get; set; }
         public string name { get; set; }
         public string email { get; set; }

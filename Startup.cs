@@ -31,6 +31,8 @@ namespace NexusApi
         {
             //Dependency Injection 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<ITeamService, TeamService>();
             //Entity FrameWork - Context Injection
             services.AddDbContext<NexusContext>(options => options.UseSqlServer(GlobalSettings.ConnectionString));
             //JWT Authetication
