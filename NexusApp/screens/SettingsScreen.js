@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 
-class LoginScreen extends Component {
+class SettingsScreen extends Component {
   render() {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>Login Screen</Text>
+        <Text>Seetings Screen</Text>
       </View>
     );
   }
 }
 
-export default LoginScreen;
+export default SettingsScreen;

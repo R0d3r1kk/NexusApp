@@ -1,9 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 import {View, Text} from 'react-native';
 
-const HomeScreen = () => {
+const screenStyle = {flex: 1, alignItems: 'center', justifyContent: 'center'};
+const HomeScreen = ({navigation}) => {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={screenStyle}>
       <Text>Home Screen</Text>
     </View>
   );

@@ -1,10 +1,35 @@
-import * as React from 'react';
-import {View, Text} from 'react-native';
+import React from 'react';
+import {View, Image, Text, StyleSheet} from 'react-native';
 
-const SplashScreen = () => {
+const styles = StyleSheet.create({
+  view: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  tinyLogo: {
+    width: 300,
+    height: 50,
+    resizeMode: 'contain',
+  },
+  text: {
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+});
+
+const SplashScreen = ({navigation}) => {
+  setTimeout(function () {
+    navigation.replace('login');
+  }, 5000);
+
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Splash Screen</Text>
+    <View style={styles.view}>
+      <Image
+        style={styles.tinyLogo}
+        source={require('../assets/images/logo.png')}
+      />
+      <Text style={styles.text}>NEARSHORE SOFTWARE DEVELOPMENT</Text>
     </View>
   );
 };
