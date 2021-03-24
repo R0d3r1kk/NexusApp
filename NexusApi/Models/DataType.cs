@@ -27,5 +27,7 @@ namespace NexusApi.Models
         public const string TEAM_DELETE = "TEAM_DELETE";
         public const string USER_TEAM_CHANGE = "USER_TEAM_CHANGE";
         public const string LOGS_GET = "LOGS_GET";
+
+        public const string LOGIN = "LOGIN";
     }
 }
