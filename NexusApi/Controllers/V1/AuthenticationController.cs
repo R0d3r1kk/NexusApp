@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using NexusApi.Context;
 using NexusApi.Filters;
+using NexusApi.Helpers;
 using NexusApi.Interfaces;
 using NexusApi.Models;
 using System;
@@ -48,7 +49,8 @@ namespace NexusApi.Controllers.V1
                 if (user != null)
                 {
                     var tkn = GenerateToken(user);
-                    return Ok(tkn);
+                    var cypher = CryptoHelper.Encrypt(tkn, GlobalSettings.Key, GlobalSettings.Key.Substring(0, 16));
+                    return Ok(cypher);
                 }
                 else
                     return NotFound();
