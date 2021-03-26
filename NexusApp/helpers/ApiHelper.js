@@ -19,9 +19,7 @@ const getHeaders = async () => {
 
 export const post = async (destination, body) => {
   const headers = await getHeaders();
-  console.log(AUTH_URL + destination);
   const data = await encryptData(JSON.stringify(body), NKEY);
-  console.log(data);
   const result = await fetch(AUTH_URL + destination, {
     method: 'POST',
     headers,
@@ -42,13 +40,27 @@ export const get = async destination => {
 };
 
 async function checkStatus(response) {
-  if (response.ok) {
-    const base64 = await response.json();
-    const res = await decryptData(base64, NKEY);
-    return JSON.stringify(res);
-  } else {
-    let error = new Error(response.statusText);
-    error.response = response;
-    throw error;
+  switch (response.status) {
+    case 200:
+      const base64 = await response.json();
+      return await decryptData(base64, NKEY, NKEY.substring(0, 16));
+    case 401:
+      await DeleteStorage();
+      throw {error: 'Acceso denegado'};
+    case 404:
+      throw {error: 'El usuario no existe'};
+    case 500:
+      await DeleteStorage();
+      throw {error: 'Validando Token'};
+    default:
+      if (response.ok) {
+        const base64 = await response.json();
+        const res = await decryptData(base64, NKEY, NKEY.substring(0, 16));
+        return JSON.stringify(res);
+      } else {
+        let error = new Error(response.statusText);
+        error.response = response;
+        throw error;
+      }
   }
 }

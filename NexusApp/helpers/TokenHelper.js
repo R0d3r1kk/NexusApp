@@ -47,6 +47,7 @@ const GenerateToken = async () => {
     var res = await checkStatus(result);
     if (res !== null) {
       await setToken(res);
+      return res;
     }
   } catch (e) {
     return null;

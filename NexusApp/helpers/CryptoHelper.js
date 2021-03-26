@@ -24,22 +24,25 @@ async function encryptData(input, key) {
 }
 
 async function decryptData(input, key, iv) {
-  const messageArrayBuffer = RNSimpleCrypto.utils.convertUtf8ToArrayBuffer(
-    input,
-  );
-  const keyArrayBuffer = RNSimpleCrypto.utils.convertUtf8ToArrayBuffer(key);
+  try {
+    const messageArrayBuffer = RNSimpleCrypto.utils.convertBase64ToArrayBuffer(
+      input,
+    );
+    const keyArrayBuffer = RNSimpleCrypto.utils.convertUtf8ToArrayBuffer(key);
 
-  const ivArrayBuffer = RNSimpleCrypto.utils.convertUtf8ToArrayBuffer(
-    key.substring(0, 16),
-  );
+    const ivArrayBuffer = RNSimpleCrypto.utils.convertUtf8ToArrayBuffer(iv);
 
-  const cipherTextArrayBuffer = await RNSimpleCrypto.AES.decrypt(
-    messageArrayBuffer,
-    keyArrayBuffer,
-    ivArrayBuffer,
-  );
+    const cipherTextArrayBuffer = await RNSimpleCrypto.AES.decrypt(
+      messageArrayBuffer,
+      keyArrayBuffer,
+      ivArrayBuffer,
+    );
 
-  return toBase64(cipherTextArrayBuffer);
+    return toBase64(cipherTextArrayBuffer);
+  } catch (e) {
+    console.log(e);
+    throw {error: e.message};
+  }
 }
 
 export {encryptData, decryptData};

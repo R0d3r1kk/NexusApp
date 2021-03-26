@@ -49,7 +49,7 @@ const Form = ({fields, buttonText, action, afterSubmit}) => {
       const result = await action(...getValues());
       await afterSubmit(result);
     } catch (e) {
-      setErrorMessage(e.message);
+      setErrorMessage(e.error);
     }
   };
 
