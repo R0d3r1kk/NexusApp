@@ -14,6 +14,7 @@ using NexusApi.Context;
 using Microsoft.Extensions.Hosting;
 using NexusApi.Interfaces;
 using NexusApi.Services;
+using System.Threading.Tasks;
 
 namespace NexusApi
 {
@@ -29,19 +30,16 @@ namespace NexusApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Entity FrameWork - Context Injection
+            services.AddDbContext<NexusContext>(options => options.UseSqlServer(GlobalSettings.ConnectionString));
             //Dependency Injection 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITeamService, TeamService>();
-            //Entity FrameWork - Context Injection
-            services.AddDbContext<NexusContext>(options => options.UseSqlServer(GlobalSettings.ConnectionString));
+
             //JWT Authetication
             var key = Encoding.ASCII.GetBytes(GlobalSettings.Secret);
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(x =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
@@ -50,7 +48,32 @@ namespace NexusApi
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
-                    ValidateAudience = false
+                    ValidateAudience = false,
+                    RequireExpirationTime = true,
+                };
+                x.Events = new JwtBearerEvents
+                {
+                    //OnMessageReceived = context =>
+                    //{
+                    //    var authToken = context.Request.Headers["Authorization"].ToString();
+
+                    //    var token =  !string.IsNullOrEmpty(authToken) ? authToken.Substring(7) : String.Empty;
+                         
+                    //    if (!string.IsNullOrEmpty(token))
+                    //    {
+                    //        // Read the token out of the query string
+                    //        context.Token = token;
+                    //    }
+                    //    return Task.CompletedTask;
+                    //},
+                    OnAuthenticationFailed = context =>
+                    {
+                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        {
+                            context.Response.Headers.Add("Token-Expired", "true");
+                        }
+                        return Task.CompletedTask;
+                    }
                 };
             });
 
@@ -60,6 +83,33 @@ namespace NexusApi
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(GlobalSettings.Api_Version, new OpenApiInfo { Title = "NexusApi", Version = $"V{GlobalSettings.Api_Version}" });
+                // To Enable authorization using Swagger (JWT)    
+                //c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                //{
+                //    Name = "Authorization",
+                //    Type = SecuritySchemeType.ApiKey,
+                //    Scheme = "Bearer",
+                //    BearerFormat = "JWT",
+                //    In = ParameterLocation.Header,
+                //    Description = "Enter 'Bearer' [space] and then your valid token in the text input below.\r\n\r\nExample: \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\"",
+                //});
+                //c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                //{
+                //    {
+                //          new OpenApiSecurityScheme
+                //            {
+                //                Reference = new OpenApiReference
+                //                {
+                //                    Type = ReferenceType.SecurityScheme,
+                //                    Id = "Bearer"
+                //                }
+                //            },
+                //            new string[] {
+                //            GlobalSettings.Secret
+                //            }
+
+                //    }
+                //});
             });
 
             //MVC Versioning
@@ -79,22 +129,25 @@ namespace NexusApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint($"/swagger/{GlobalSettings.Api_Version}/swagger.json", $"NexusApi {GlobalSettings.Api_Version}"));
+
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint($"/swagger/{GlobalSettings.Api_Version}/swagger.json", $"NexusApi {GlobalSettings.Api_Version}"));
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.UseAuthentication();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

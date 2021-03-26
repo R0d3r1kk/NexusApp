@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using NexusApi.Context;
 using NexusApi.Filters;
@@ -7,14 +9,18 @@ using NexusApi.Interfaces;
 using NexusApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace NexusApi.Controllers.V1
 {
-    [ApiVersion("1.0")]
+    [ApiVersion("1")]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AuthenticationController : ControllerBase
     {
         private readonly NexusContext _context;
@@ -38,9 +44,12 @@ namespace NexusApi.Controllers.V1
 
             try
             {
-                var user =  _context.Users.Where(u => u.email == request.email && u.password == request.password).Single();
+                var user = _context.Users.SingleOrDefault(u => u.email == request.email && u.password == request.password);
                 if (user != null)
-                    return Ok(user);
+                {
+                    var tkn = GenerateToken(user);
+                    return Ok(tkn);
+                }
                 else
                     return NotFound();
 
@@ -63,6 +72,70 @@ namespace NexusApi.Controllers.V1
 
                 return Conflict(ex.StackTrace);
             }
+        }
+
+        [AllowAnonymous]
+        [HttpPost("/token")]
+        public IActionResult Get(string username, string password)
+        {
+            if (username == password)
+                return Ok(GenerateToken(username));
+            else
+                return Unauthorized();
+        }
+
+        private string GenerateToken(string username)
+        {
+            // Leemos el secret_key desde nuestro appseting
+            var key = Encoding.ASCII.GetBytes(GlobalSettings.Secret);
+
+            // Creamos los claims (pertenencias, características) del usuario
+            var claims = new[]
+            {
+                        new Claim(ClaimTypes.NameIdentifier, username),
+                    };
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                // Nuestro token va a durar un día
+                Expires = DateTime.UtcNow.AddMinutes(30),
+                // Credenciales para generar el token usando nuestro secretykey y el algoritmo hash 256
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var createdToken = tokenHandler.CreateToken(tokenDescriptor);
+            var tkn = tokenHandler.WriteToken(createdToken);
+            return tkn;
+        }
+
+        private string GenerateToken(Users user)
+        {
+            // Leemos el secret_key desde nuestro appseting
+            var key = Encoding.ASCII.GetBytes(GlobalSettings.Secret);
+
+            // Creamos los claims (pertenencias, características) del usuario
+            var claims = new[]
+                     {
+                        new Claim("UserData", JsonConvert.SerializeObject(user)),
+                        new Claim(ClaimTypes.NameIdentifier, user.user_id.ToString()),
+                        new Claim(ClaimTypes.Email, user.email)
+                    };
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                // Nuestro token va a durar un día
+                Expires = DateTime.UtcNow.AddMinutes(30),
+                // Credenciales para generar el token usando nuestro secretykey y el algoritmo hash 256
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var createdToken = tokenHandler.CreateToken(tokenDescriptor);
+            var tkn = tokenHandler.WriteToken(createdToken);
+            return tkn;
         }
     }
 }

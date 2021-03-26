@@ -15,6 +15,7 @@ namespace NexusApi.Context
         public DbSet<Accounts> Accounts { get; set; }
         public DbSet<CTeam> CTeams { get; set; }
         public DbSet<Logs> Logs { get; set; }
+        public DbSet<UserTeamChanges> UserTeamChanges { get; set; }
         
     }
 }

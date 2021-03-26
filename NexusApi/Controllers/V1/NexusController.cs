@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using NexusApi.Filters;
 using Newtonsoft.Json;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NexusApi.Controllers.V1
 {
-    [ApiVersion("1.0")]
+    [ApiVersion("1")]
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class NexusController : ControllerBase
     {
@@ -202,7 +204,7 @@ namespace NexusApi.Controllers.V1
                     action = Actions.USER_UPDATE,
                     log_type = (int)LogType.API,
                     date = DateTime.Now,
-                    message = updated ? "User succesfully edited" : "Error editing user",
+                    message = updated ? "User team succesfully changed" : "Error changing user team",
                     model_id = request.user_id,
                     action_responsible = request.responsible_id
                 });

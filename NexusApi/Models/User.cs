@@ -12,5 +12,6 @@ namespace NexusApi.Models
         public string password { get; set; }
         public int session_id { get; set; }
         public int team_id { get; set; }
+        public DateTime date_created { get; set; }
     }
 }

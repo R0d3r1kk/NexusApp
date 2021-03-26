@@ -16,10 +16,18 @@ namespace NexusApi.Services
             try
             {
 
-                var founded = _context.Users.Select(u => u.email == request.email);
+                var founded = _context.Users.SingleOrDefault(u => u.email == request.email);
                 if (founded == null)
                 {
+                    request.date_created = DateTime.Now;
                     _context.Users.Add(request);
+                    _context.UserTeamChanges.Add(new UserTeamChanges()
+                    {
+                        team_id = request.team_id,
+                        user_id = request.user_id,
+                        date_start = DateTime.Now,
+                        action = "ADDING USER TO TEAM"
+                    });
                     await _context.SaveChangesAsync();
                     return true;
                 }
@@ -135,6 +143,14 @@ namespace NexusApi.Services
                         throw new ArgumentException($"User Team ID[{request.new_team_id}] not founded");
 
                     user.team_id = request.new_team_id;
+                    var changefounded = _context.UserTeamChanges.SingleOrDefault(u => u.user_id == user.user_id && u.team_id == user.team_id);
+                    if (changefounded != null)
+                    {
+                        changefounded.date_end = DateTime.Now;
+                        changefounded.action = "CHANGING USER TEAM";
+                        _context.UserTeamChanges.Update(changefounded);
+                    }
+
                     _context.Users.Update(user);
 
                     await _context.SaveChangesAsync();

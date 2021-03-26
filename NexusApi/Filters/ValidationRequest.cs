@@ -23,7 +23,7 @@ namespace NexusApi.Filters
                 //validate request parameters
                 try
                 {
-                    body = CryptoHelper.Decrypt(base64, GlobalSettings.Key, GlobalSettings.Key.Substring(0, 16));
+                      body = CryptoHelper.Decrypt(base64, GlobalSettings.Key, GlobalSettings.Key.Substring(0, 16));
                 }
                 catch
                 {
