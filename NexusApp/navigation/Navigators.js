@@ -30,6 +30,9 @@ const AuthStackNavigator = () => {
       />
       <Stack.Screen name="login" component={LoginScreen} />
       <Stack.Screen name="register" component={RegisterScreen} />
+      <Stack.Screen name="home" component={DrawerStackNavigator} />
+      <Stack.Screen name="main" component={HomeScreen} />
+      <Stack.Screen name="settings" component={SettingsScreen} />
     </Stack.Navigator>
   );
 };
@@ -46,7 +49,12 @@ const MainStackNavigator = () => {
 
 const DrawerStackNavigator = () => {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator
+      hideStatusBar="true"
+      drawerContentOptions={{
+        activeTintColor: '#eb4149',
+        itemStyle: {marginVertical: 5},
+      }}>
       <Drawer.Screen name="home" component={HomeScreen} />
       <Drawer.Screen name="settings" component={SettingsScreen} />
     </Drawer.Navigator>

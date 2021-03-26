@@ -1,23 +1,24 @@
 import React, {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {MainStackNavigator, AuthStackNavigator} from './Navigators';
+import {getToken, DeleteStorage} from '../helpers/TokenHelper';
 
-const AppNavigator = () => {
-  const [isSignedIn] = useState(false);
+class AppNavigator extends React.Component {
+  constructor() {
+    super();
+  }
 
-  if (!isSignedIn) {
+  async componentDidMount() {
+    // var tkn = await getToken();
+  }
+
+  render() {
     return (
       <NavigationContainer>
         <AuthStackNavigator />
       </NavigationContainer>
     );
   }
-
-  return (
-    <NavigationContainer>
-      <MainStackNavigator />
-    </NavigationContainer>
-  );
-};
+}
 
 export default AppNavigator;

@@ -38,7 +38,7 @@ async function decryptData(input, key, iv) {
       ivArrayBuffer,
     );
 
-    return toBase64(cipherTextArrayBuffer);
+    return toUtf8(cipherTextArrayBuffer);
   } catch (e) {
     console.log(e);
     throw {error: e.message};
