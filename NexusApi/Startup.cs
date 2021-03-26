@@ -49,7 +49,6 @@ namespace NexusApi
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
                     ValidateAudience = false,
-                    RequireExpirationTime = true,
                 };
                 x.Events = new JwtBearerEvents
                 {

@@ -76,10 +76,10 @@ namespace NexusApi.Controllers.V1
 
         [AllowAnonymous]
         [HttpPost("/token")]
-        public IActionResult Get(string username, string password)
+        public IActionResult Get([FromBody] TokenModel model)
         {
-            if (username == password)
-                return Ok(GenerateToken(username));
+            if (model.username == model.password)
+                return Ok(GenerateToken(model.username));
             else
                 return Unauthorized();
         }

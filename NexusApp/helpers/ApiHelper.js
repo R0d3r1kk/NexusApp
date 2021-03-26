@@ -1,9 +1,9 @@
-import {getToken, setToken} from './TokenHelper';
-import {AUTH_URL, NKEY, NTKN} from '../Settings';
+import {getToken, DeleteStorage} from './TokenHelper';
+import {AUTH_URL, NKEY} from '../Settings';
 import {encryptData, decryptData} from './CryptoHelper';
 
 const getHeaders = async () => {
-  await setToken(NTKN);
+  //await DeleteStorage();
   const token = await getToken();
   const headers = {
     Accept: 'application/json',
@@ -11,7 +11,7 @@ const getHeaders = async () => {
   };
 
   if (token) {
-    headers.Authorization = 'Bearer ${token}';
+    headers.Authorization = 'Bearer ' + token;
   }
 
   return headers;
@@ -24,12 +24,11 @@ export const post = async (destination, body) => {
   console.log(data);
   const result = await fetch(AUTH_URL + destination, {
     method: 'POST',
-    mode: 'cors',
     headers,
     //body: JSON.stringify(body),
     body: data,
   });
-  await checkStatus(result);
+  return await checkStatus(result);
 };
 
 export const get = async destination => {
@@ -39,7 +38,7 @@ export const get = async destination => {
     method: 'GET',
     headers,
   });
-  await checkStatus(result);
+  return await checkStatus(result);
 };
 
 async function checkStatus(response) {
