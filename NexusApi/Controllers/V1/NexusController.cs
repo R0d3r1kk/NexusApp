@@ -7,6 +7,8 @@ using NexusApi.Filters;
 using Newtonsoft.Json;
 using System;
 using Microsoft.AspNetCore.Authorization;
+using System.Linq;
+using NexusApi.Helpers;
 
 namespace NexusApi.Controllers.V1
 {
@@ -75,6 +77,31 @@ namespace NexusApi.Controllers.V1
                     action_responsible = request.responsible_id
                 });
 
+                return Conflict(ex.StackTrace);
+            }
+        }
+
+        [HttpGet("All")]
+        public async Task<ActionResult<UserModel>> GetAll()
+        {
+            try
+            {
+                var users = _context.Users.ToList();
+
+                if (users != null)
+                {
+                    var cypher = CryptoHelper.Encrypt(JsonConvert.SerializeObject(users), GlobalSettings.Key, GlobalSettings.Key.Substring(0, 16));
+                    return Ok(cypher);
+                }
+                else
+                    return NotFound();
+            }
+            catch (ArgumentException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            catch (Exception ex)
+            {
                 return Conflict(ex.StackTrace);
             }
         }
