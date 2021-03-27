@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Image, Text, StyleSheet} from 'react-native';
+import {checkToken, DeleteStorage} from '../helpers/TokenHelper';
 
 const styles = StyleSheet.create({
   view: {
@@ -19,8 +20,11 @@ const styles = StyleSheet.create({
 });
 
 const SplashScreen = ({navigation}) => {
-  setTimeout(function () {
-    navigation.replace('login');
+  setTimeout(async function () {
+    //await DeleteStorage();
+    if (await checkToken(navigation)) {
+      navigation.replace('Home');
+    }
   }, 5000);
 
   return (

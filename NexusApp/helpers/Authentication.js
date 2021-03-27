@@ -1,9 +1,11 @@
-import {post, postFromAuth} from './ApiHelper';
+import {postFromAuth} from './ApiHelper';
+import {DeleteStorage} from './TokenHelper';
 
 export const login = (email, password) => {
   return postFromAuth('login', {email, password});
 };
 
-export const createAccount = (email, password) => {
-  return postFromAuth('users', {email, password});
+export const logout = async navigation => {
+  await DeleteStorage();
+  navigation.navigate('home');
 };

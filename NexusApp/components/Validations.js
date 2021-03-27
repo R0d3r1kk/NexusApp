@@ -4,6 +4,12 @@ export const validateContent = text => {
   }
 };
 
+export const validateOption = value => {
+  if (value.length < 1) {
+    return 'Select an option';
+  }
+};
+
 export const validateLength = text => {
   if (text && text.length < 6) {
     return 'Must be 6 characters or more.';

@@ -6,11 +6,11 @@ import {
   Animated,
   View,
   Image,
-  Dimensions,
 } from 'react-native';
 import {hasValidationError, validateFields} from './Validations';
 import SubmitButton from './SubmitButton';
 import Field from './Field';
+import {primaryColor} from '../Settings';
 
 const getInitialState = fieldKeys => {
   const state = {};
@@ -87,7 +87,7 @@ const Form = ({title, fields, buttonText, action, afterSubmit}) => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+    <KeyboardAvoidingView style={styles.container} behavior="height" enabled>
       <Text style={styles.title}>{title}</Text>
       <Animated.View style={{opacity}}>
         {isSubmitting && (
@@ -105,7 +105,7 @@ const Form = ({title, fields, buttonText, action, afterSubmit}) => {
               fieldName={key}
               field={fields[key]}
               error={validationErrors[key]}
-              onChangeText={onChangeValue}
+              onChange={onChangeValue}
               value={values[key]}
             />
           );
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   error: {
-    color: '#eb4149',
+    color: primaryColor,
     marginTop: 30,
     height: 17.5,
     fontSize: 15,

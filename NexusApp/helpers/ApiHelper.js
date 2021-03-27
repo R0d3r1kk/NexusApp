@@ -1,10 +1,13 @@
-import {getToken, DeleteStorage} from './TokenHelper';
+import {getToken, DeleteStorage, GenerateToken} from './TokenHelper';
 import {AUTH_URL, NKEY} from '../Settings';
 import {encryptData, decryptData} from './CryptoHelper';
 
 const getHeaders = async () => {
   //await DeleteStorage();
-  const token = await getToken();
+  let token = await getToken();
+  if (token === null) {
+    token = await GenerateToken();
+  }
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -70,14 +73,14 @@ async function checkStatus(response) {
       await DeleteStorage();
       throw {error: 'Acceso denegado'};
     case 404:
-      throw {error: 'El usuario no existe'};
+      throw {error: 'Datos no encontrados, intenta de nuevo...'};
     case 500:
       await DeleteStorage();
       throw {error: 'Generando token intenta de nuevo...'};
     default:
       if (response.ok) {
-        const base64 = await response.json();
-        return await decryptData(base64, NKEY, NKEY.substring(0, 16));
+        const bass64 = await response.json();
+        return await decryptData(bass64, NKEY, NKEY.substring(0, 16));
       } else {
         let error = new Error(response.statusText);
         error.response = response;

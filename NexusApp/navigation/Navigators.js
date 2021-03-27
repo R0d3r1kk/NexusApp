@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {TouchableOpacity, FontAwesome5} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import {primaryColor} from '../Settings';
 
 import SplashScreen from '../screens/SplashScreen';
 import HomeScreen from '../screens/HomeScreen';
@@ -14,7 +15,7 @@ const Drawer = createDrawerNavigator();
 
 const screenOptionStyle = {
   headerStyle: {
-    backgroundColor: '#eb4149',
+    backgroundColor: primaryColor,
   },
   headerTintColor: 'white',
   headerBackTitle: 'Back',
@@ -28,11 +29,8 @@ const AuthStackNavigator = () => {
         component={SplashScreen}
         options={{headerShown: false}}
       />
-      <Stack.Screen name="login" component={LoginScreen} />
-      <Stack.Screen name="register" component={RegisterScreen} />
-      <Stack.Screen name="home" component={DrawerStackNavigator} />
-      <Stack.Screen name="main" component={HomeScreen} />
-      <Stack.Screen name="settings" component={SettingsScreen} />
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Home" component={DrawerStackNavigator} />
     </Stack.Navigator>
   );
 };
@@ -50,13 +48,14 @@ const MainStackNavigator = () => {
 const DrawerStackNavigator = () => {
   return (
     <Drawer.Navigator
-      hideStatusBar="true"
+      hideStatusBar="false"
       drawerContentOptions={{
-        activeTintColor: '#eb4149',
+        activeTintColor: primaryColor,
         itemStyle: {marginVertical: 5},
       }}>
-      <Drawer.Screen name="home" component={HomeScreen} />
-      <Drawer.Screen name="settings" component={SettingsScreen} />
+      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Agregar " component={RegisterScreen} />
+      <Drawer.Screen name="Settings" component={SettingsScreen} />
     </Drawer.Navigator>
   );
 };

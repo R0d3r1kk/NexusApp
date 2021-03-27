@@ -120,9 +120,11 @@ namespace NexusApi.Controllers.V1
             // Creamos los claims (pertenencias, características) del usuario
             var claims = new[]
                      {
+                        new Claim("Id", user.user_id.ToString()),
                         new Claim("UserData", JsonConvert.SerializeObject(user)),
                         new Claim(ClaimTypes.NameIdentifier, user.user_id.ToString()),
-                        new Claim(ClaimTypes.Email, user.email)
+                        new Claim(ClaimTypes.Email, user.email),
+                        new Claim(JwtRegisteredClaimNames.Jti, $"{user.user_id}{user.team_id}{user.session_id}{user.name.Substring(0, 3)}")
                     };
 
             var tokenDescriptor = new SecurityTokenDescriptor
