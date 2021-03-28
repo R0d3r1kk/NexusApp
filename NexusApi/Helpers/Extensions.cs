@@ -18,7 +18,7 @@ namespace NexusApi.Helpers
             catch (Exception ex)
             {
                 result = default(T);
-                throw new ArgumentException("Malformed body");
+                throw new ArgumentException($"Malformed body: {ex.Message}");
             }
 
             return result;

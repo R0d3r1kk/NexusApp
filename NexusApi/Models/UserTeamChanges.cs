@@ -11,8 +11,8 @@ namespace NexusApi.Models
         [Key]
         public int change_id { get; set; }
         public int user_id { get; set; }
-        public DateTime date_start { get; set; }
-        public DateTime date_end { get; set; }
+        public DateTime? date_start { get; set; }
+        public DateTime? date_end { get; set; }
         public int team_id { get; set; }
         public string action { get; set; }
     }

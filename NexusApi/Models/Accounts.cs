@@ -1,5 +1,6 @@
 ﻿
 
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace NexusApi.Models
@@ -12,6 +13,7 @@ namespace NexusApi.Models
         public string account_client { get; set; }
         public string operation_responible { get; set; }
         public string team_id { get; set; }
+        public DateTime date_created { get; set; }
 
     }
 }

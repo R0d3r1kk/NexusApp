@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NexusApi.Models
 {
@@ -12,6 +13,7 @@ namespace NexusApi.Models
         public string password { get; set; }
         public int session_id { get; set; }
         public int team_id { get; set; }
+        [Column(TypeName = "datetime2")]
         public DateTime date_created { get; set; }
     }
 }
