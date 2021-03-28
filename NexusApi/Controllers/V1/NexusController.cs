@@ -22,7 +22,7 @@ namespace NexusApi.Controllers.V1
         private readonly IUserService _userService;
         private readonly IAccountService _accountService;
         private readonly ITeamService _teamService;
- 
+
         public NexusController(NexusContext context, IUserService userService, IAccountService accountService, ITeamService teamService)
         {
             this._context = context;
@@ -35,9 +35,8 @@ namespace NexusApi.Controllers.V1
         [ValidationRequest]
         public async Task<ActionResult<UserModel>> GetUser()
         {
-            string body = HttpContext.Items["request_body"].ToString();
-            var request = JsonConvert.DeserializeObject<GetRequest>(body);
 
+            var request = Extensions.getRequest<GetRequest>(HttpContext);
             if (request == null)
                 return BadRequest();
 
@@ -111,10 +110,7 @@ namespace NexusApi.Controllers.V1
         public async Task<ActionResult> addUser()
         {
 
-            string body = HttpContext.Items["request_body"].ToString();
-            var request = JsonConvert.DeserializeObject<AddUserRequest>(body);
-
-
+            var request = Extensions.getRequest<AddUserRequest>(HttpContext);
             if (request == null)
                 return BadRequest();
 
@@ -160,13 +156,10 @@ namespace NexusApi.Controllers.V1
 
         [HttpPost("EditUser")]
         [ValidationRequest]
-        public async Task<ActionResult>EditUser()
+        public async Task<ActionResult> EditUser()
         {
 
-            string body = HttpContext.Items["request_body"].ToString();
-            var request = JsonConvert.DeserializeObject<AddUserRequest>(body);
-
-
+            var request = Extensions.getRequest<AddUserRequest>(HttpContext);
             if (request == null)
                 return BadRequest();
 
@@ -215,10 +208,7 @@ namespace NexusApi.Controllers.V1
         public async Task<ActionResult> ChangeTeam()
         {
 
-            string body = HttpContext.Items["request_body"].ToString();
-            var request = JsonConvert.DeserializeObject<ChangeTeamRequest>(body);
-
-
+            var request = Extensions.getRequest<ChangeTeamRequest>(HttpContext);
             if (request == null)
                 return BadRequest();
 
@@ -266,9 +256,7 @@ namespace NexusApi.Controllers.V1
         [ValidationRequest]
         public async Task<ActionResult> RemoveUser()
         {
-            string body = HttpContext.Items["request_body"].ToString();
-            var request = JsonConvert.DeserializeObject<DeleteRequest>(body);
-
+            var request = Extensions.getRequest<DeleteRequest>(HttpContext);
             if (request == null)
                 return BadRequest();
 
@@ -315,9 +303,7 @@ namespace NexusApi.Controllers.V1
         [ValidationRequest]
         public async Task<ActionResult<Accounts>> GetAccount()
         {
-            string body = HttpContext.Items["request_body"].ToString();
-            var request = JsonConvert.DeserializeObject<GetRequest>(body);
-
+            var request = Extensions.getRequest<GetRequest>(HttpContext);
             if (request == null)
                 return BadRequest();
 
@@ -366,10 +352,7 @@ namespace NexusApi.Controllers.V1
         public async Task<ActionResult> addAccount()
         {
 
-            string body = HttpContext.Items["request_body"].ToString();
-            var request = JsonConvert.DeserializeObject<AddAccountRequest>(body);
-
-
+            var request = Extensions.getRequest<AddAccountRequest>(HttpContext);
             if (request == null)
                 return BadRequest();
 
@@ -418,10 +401,7 @@ namespace NexusApi.Controllers.V1
         public async Task<ActionResult> EditAccount()
         {
 
-            string body = HttpContext.Items["request_body"].ToString();
-            var request = JsonConvert.DeserializeObject<AddAccountRequest>(body);
-
-
+            var request = Extensions.getRequest<AddAccountRequest>(HttpContext);
             if (request == null)
                 return BadRequest();
 
@@ -456,7 +436,7 @@ namespace NexusApi.Controllers.V1
                     log_type = (int)LogType.API,
                     date = DateTime.Now,
                     message = ex.StackTrace,
-                    model_id =request.account_id,
+                    model_id = request.account_id,
                     action_responsible = request.op_responsible_id
                 });
 
@@ -469,9 +449,7 @@ namespace NexusApi.Controllers.V1
         [ValidationRequest]
         public async Task<ActionResult> RemoveAccount()
         {
-            string body = HttpContext.Items["request_body"].ToString();
-            var request = JsonConvert.DeserializeObject<DeleteRequest>(body);
-
+            var request = Extensions.getRequest<DeleteRequest>(HttpContext);
             if (request == null)
                 return BadRequest();
 
@@ -518,9 +496,7 @@ namespace NexusApi.Controllers.V1
         [ValidationRequest]
         public async Task<ActionResult<CTeam>> GetTeam()
         {
-            string body = HttpContext.Items["request_body"].ToString();
-            var request = JsonConvert.DeserializeObject<GetRequest>(body);
-
+            var request = Extensions.getRequest<GetRequest>(HttpContext);
             if (request == null)
                 return BadRequest();
 
@@ -569,9 +545,7 @@ namespace NexusApi.Controllers.V1
         public async Task<ActionResult> addTeam()
         {
 
-            string body = HttpContext.Items["request_body"].ToString();
-            var request = JsonConvert.DeserializeObject<AddTeamRequest>(body);
-
+            var request = Extensions.getRequest<AddTeamRequest>(HttpContext);
             if (request == null)
                 return BadRequest();
 
@@ -620,10 +594,7 @@ namespace NexusApi.Controllers.V1
         public async Task<ActionResult> EditTeam()
         {
 
-            string body = HttpContext.Items["request_body"].ToString();
-            var request = JsonConvert.DeserializeObject<AddTeamRequest>(body);
-
-
+            var request = Extensions.getRequest<AddTeamRequest>(HttpContext);
             if (request == null)
                 return BadRequest();
 
@@ -671,9 +642,7 @@ namespace NexusApi.Controllers.V1
         [ValidationRequest]
         public async Task<ActionResult> RemoveTeam()
         {
-            string body = HttpContext.Items["request_body"].ToString();
-            var request = JsonConvert.DeserializeObject<DeleteRequest>(body);
-
+            var request = Extensions.getRequest<DeleteRequest>(HttpContext);
             if (request == null)
                 return BadRequest();
 
@@ -715,6 +684,5 @@ namespace NexusApi.Controllers.V1
                 return Conflict(ex.StackTrace);
             }
         }
-
     }
 }

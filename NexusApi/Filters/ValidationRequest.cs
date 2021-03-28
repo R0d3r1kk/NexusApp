@@ -23,11 +23,12 @@ namespace NexusApi.Filters
                 //validate request parameters
                 try
                 {
-                      body = CryptoHelper.Decrypt(base64, GlobalSettings.Key, GlobalSettings.Key.Substring(0, 16));
+                    body = CryptoHelper.Decrypt(base64, GlobalSettings.Key, GlobalSettings.Key.Substring(0, 16));
                 }
-                catch
+                catch (Exception ex)
                 {
-                    body = base64;
+                    Console.WriteLine(ex);
+                    body = null;
                 }
 
                 context.HttpContext.Items.Add("request_body", body);

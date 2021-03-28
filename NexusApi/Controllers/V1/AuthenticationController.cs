@@ -37,9 +37,8 @@ namespace NexusApi.Controllers.V1
         [ValidationRequest]
         public async Task<ActionResult<LoginRequest>> Login()
         {
-            string body = HttpContext.Items["request_body"].ToString();
-            var request = JsonConvert.DeserializeObject<LoginRequest>(body);
-
+            
+            var request = Extensions.getRequest< LoginRequest>(HttpContext);
             if (request == null)
                 return BadRequest();
 
