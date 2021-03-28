@@ -32,7 +32,7 @@ namespace NexusApi.Services
                     return true;
                 }
                 else
-                    throw new ArgumentException("User email exist");
+                    throw new ArgumentException("Este email ya existe");
             }
             catch (Exception)
             {
@@ -140,7 +140,7 @@ namespace NexusApi.Services
                 {
                     var teamfounded = await _context.CTeams.FindAsync(user.team_id);
                     if (teamfounded == null)
-                        throw new ArgumentException($"User Team ID[{request.new_team_id}] not founded");
+                        throw new ArgumentException($"User Team ID[{request.new_team_id}] - No existe");
 
                     user.team_id = request.new_team_id;
                     var changefounded = _context.UserTeamChanges.SingleOrDefault(u => u.user_id == user.user_id && u.team_id == user.team_id);

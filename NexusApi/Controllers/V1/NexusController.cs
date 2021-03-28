@@ -130,7 +130,7 @@ namespace NexusApi.Controllers.V1
 
                 if (created)
                 {
-                    var cypher = CryptoHelper.Encrypt(JsonConvert.SerializeObject(created), GlobalSettings.Key, GlobalSettings.Key.Substring(0, 16));
+                    var cypher = CryptoHelper.Encrypt(JsonConvert.SerializeObject(request), GlobalSettings.Key, GlobalSettings.Key.Substring(0, 16));
                     return Created("User", cypher);
                 }
                 else
