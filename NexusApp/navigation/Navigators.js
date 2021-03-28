@@ -48,7 +48,6 @@ const MainStackNavigator = () => {
 const DrawerStackNavigator = () => {
   return (
     <Drawer.Navigator
-      hideStatusBar="false"
       drawerContentOptions={{
         activeTintColor: primaryColor,
         itemStyle: {marginVertical: 5},

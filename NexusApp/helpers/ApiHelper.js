@@ -65,9 +65,13 @@ export const post = async (url, body) => {
 };
 
 async function checkStatus(response) {
+  let base64 = '';
   switch (response.status) {
     case 200:
-      const base64 = await response.json();
+      base64 = await response.json();
+      return await decryptData(base64, NKEY, NKEY.substring(0, 16));
+    case 201:
+      base64 = await response.json();
       return await decryptData(base64, NKEY, NKEY.substring(0, 16));
     case 401:
       await DeleteStorage();
@@ -75,8 +79,9 @@ async function checkStatus(response) {
     case 404:
       throw {error: 'Datos no encontrados, intenta de nuevo...'};
     case 500:
-      await DeleteStorage();
-      throw {error: 'Generando token intenta de nuevo...'};
+      //await DeleteStorage();
+      base64 = await response.json();
+      throw {error: base64};
     default:
       if (response.ok) {
         const bass64 = await response.json();

@@ -6,11 +6,11 @@ export const Users = async () => {
 };
 
 export const AddUser = (
-  name,
   email,
+  name,
+  team_id,
   password,
   session_id,
-  team_id,
   op_responsible_id,
 ) => {
   return post(CRU_URL + 'AddUser', {

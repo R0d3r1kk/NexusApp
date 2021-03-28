@@ -39,6 +39,7 @@ export default class Field extends React.Component {
             <Text style={styles.label}>{field.label}</Text>
 
             <RNPickerSelect
+              key={fieldName}
               useNativeAndroidPickerStyle={false}
               fixAndroidTouchableBug={false}
               placeholder={{
@@ -47,7 +48,7 @@ export default class Field extends React.Component {
               }}
               style={{...pickerSelectStyles}}
               onValueChange={(item, pos) => {
-                if (item !== null) {
+                if (item != null) {
                   onChange(fieldName, item);
                 }
               }}
@@ -77,7 +78,7 @@ export default class Field extends React.Component {
             <TextInput
               autoFocus={true}
               style={styles.hiddenInput}
-              value={option.value}
+              value={option.value?.toString()}
               //onChangeText={text => onChange(fieldName, text)}
               onFocus={() => onChange(fieldName, option.value)}
             />

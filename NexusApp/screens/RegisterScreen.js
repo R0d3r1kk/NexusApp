@@ -25,7 +25,7 @@ class RegisterScreen extends React.Component {
     });
   }
 
-  handleResult(result){
+  handleResult(result) {
     try {
       console.log(result);
     } catch (e) {
@@ -100,7 +100,7 @@ class RegisterScreen extends React.Component {
           op_responsible_id: {
             input: {
               type: 'hidden',
-              value: this.state.userdata.user_id,
+              value: this.state.userdata ? this.state.userdata.user_id : '0',
             },
           },
         }}
