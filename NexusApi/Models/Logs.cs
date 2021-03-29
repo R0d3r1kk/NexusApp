@@ -15,6 +15,6 @@ namespace NexusApi.Models
         public int model_id { get; set; }
         public DateTime date { get; set; }
         public string action { get; set; }
-        public int action_responsible { get; set; }
+        public int op_responsible_id { get; set; }
     }
 }

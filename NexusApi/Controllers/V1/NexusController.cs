@@ -52,7 +52,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = user == null ? "User not found" : "User succesfully founded",
                     model_id = request.id,
-                    action_responsible = request.responsible_id
+                    op_responsible_id = request.responsible_id
                 });
 
                 if (user != null)
@@ -73,7 +73,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = ex.StackTrace,
                     model_id = request.id,
-                    action_responsible = request.responsible_id
+                    op_responsible_id = request.responsible_id
                 });
 
                 return Conflict(ex.StackTrace);
@@ -125,7 +125,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = created ? "User succesfully created" : "Error creating user",
                     model_id = request.user_id,
-                    action_responsible = request.op_responsible_id
+                    op_responsible_id = request.op_responsible_id
                 });
 
                 if (created)
@@ -149,7 +149,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = ex.StackTrace,
                     model_id = request.user_id,
-                    action_responsible = request.op_responsible_id
+                    op_responsible_id = request.op_responsible_id
                 });
 
                 return Conflict(ex.StackTrace);
@@ -177,7 +177,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = updated ? "User succesfully edited" : "Error editing user",
                     model_id = request.user_id,
-                    action_responsible = request.op_responsible_id
+                    op_responsible_id = request.op_responsible_id
                 });
 
                 if (updated)
@@ -198,7 +198,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = ex.StackTrace,
                     model_id = request.user_id,
-                    action_responsible = request.op_responsible_id
+                    op_responsible_id = request.op_responsible_id
                 });
 
                 return Conflict(ex.StackTrace);
@@ -226,7 +226,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = updated ? "User team succesfully changed" : "Error changing user team",
                     model_id = request.user_id,
-                    action_responsible = request.responsible_id
+                    op_responsible_id = request.responsible_id
                 });
 
                 if (updated)
@@ -247,7 +247,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = ex.StackTrace,
                     model_id = request.user_id,
-                    action_responsible = request.responsible_id
+                    op_responsible_id = request.responsible_id
                 });
 
                 return Conflict(ex.StackTrace);
@@ -274,7 +274,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = deleted ? "User succesfully deleted" : "Error deleting user",
                     model_id = request.id,
-                    action_responsible = request.responsible_id
+                    op_responsible_id = request.responsible_id
                 });
 
                 if (deleted)
@@ -295,7 +295,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = ex.StackTrace,
                     model_id = request.id,
-                    action_responsible = request.responsible_id
+                    op_responsible_id = request.responsible_id
                 });
 
                 return Conflict(ex.StackTrace);
@@ -322,7 +322,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = acc == null ? "Account not found" : "Account succesfully founded",
                     model_id = request.id,
-                    action_responsible = request.responsible_id
+                    op_responsible_id = request.responsible_id
                 });
 
                 if (acc != null)
@@ -343,7 +343,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = ex.StackTrace,
                     model_id = request.id,
-                    action_responsible = request.responsible_id
+                    op_responsible_id = request.responsible_id
                 });
 
                 return Conflict(ex.StackTrace);
@@ -370,7 +370,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = created ? "Account succesfully created" : "Error creating Account",
                     model_id = request.account_id,
-                    action_responsible = request.op_responsible_id
+                    op_responsible_id = request.op_responsible_id
                 });
 
                 if (created)
@@ -391,7 +391,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = ex.StackTrace,
                     model_id = request.account_id,
-                    action_responsible = request.op_responsible_id
+                    op_responsible_id = request.op_responsible_id
                 });
 
                 return Conflict(ex.StackTrace);
@@ -419,7 +419,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = updated ? "Account succesfully edited" : "Error editing account",
                     model_id = request.account_id,
-                    action_responsible = request.op_responsible_id
+                    op_responsible_id = request.op_responsible_id
                 });
 
                 if (updated)
@@ -440,7 +440,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = ex.StackTrace,
                     model_id = request.account_id,
-                    action_responsible = request.op_responsible_id
+                    op_responsible_id = request.op_responsible_id
                 });
 
                 return Conflict(ex.StackTrace);
@@ -467,7 +467,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = deleted ? "Account succesfully deleted" : "Error deleting account",
                     model_id = request.id,
-                    action_responsible = request.responsible_id
+                    op_responsible_id = request.responsible_id
                 });
 
                 if (deleted)
@@ -488,7 +488,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = ex.StackTrace,
                     model_id = request.id,
-                    action_responsible = request.responsible_id
+                    op_responsible_id = request.responsible_id
                 });
 
                 return Conflict(ex.StackTrace);
@@ -515,7 +515,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = team == null ? "User not found" : "User succesfully founded",
                     model_id = request.id,
-                    action_responsible = request.responsible_id
+                    op_responsible_id = request.responsible_id
                 });
 
                 if (team != null)
@@ -536,7 +536,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = ex.StackTrace,
                     model_id = request.id,
-                    action_responsible = request.responsible_id
+                    op_responsible_id = request.responsible_id
                 });
 
                 return Conflict(ex.StackTrace);
@@ -563,7 +563,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = created ? "Team succesfully created" : "Error creating Account",
                     model_id = request.team_id,
-                    action_responsible = request.op_responsible_id
+                    op_responsible_id = request.op_responsible_id
                 });
 
                 if (created)
@@ -584,7 +584,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = ex.StackTrace,
                     model_id = request.team_id,
-                    action_responsible = request.op_responsible_id
+                    op_responsible_id = request.op_responsible_id
                 });
 
                 return Conflict(ex.StackTrace);
@@ -612,7 +612,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = updated ? "Account succesfully edited" : "Error editing account",
                     model_id = request.team_id,
-                    action_responsible = request.op_responsible_id
+                    op_responsible_id = request.op_responsible_id
                 });
 
                 if (updated)
@@ -633,7 +633,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = ex.StackTrace,
                     model_id = request.team_id,
-                    action_responsible = request.op_responsible_id
+                    op_responsible_id = request.op_responsible_id
                 });
 
                 return Conflict(ex.StackTrace);
@@ -660,7 +660,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = deleted ? "Team succesfully deleted" : "Error deleting Team",
                     model_id = request.id,
-                    action_responsible = request.responsible_id
+                    op_responsible_id = request.responsible_id
                 });
 
                 if (deleted)
@@ -681,7 +681,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = ex.StackTrace,
                     model_id = request.id,
-                    action_responsible = request.responsible_id
+                    op_responsible_id = request.responsible_id
                 });
 
                 return Conflict(ex.StackTrace);
