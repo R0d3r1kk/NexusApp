@@ -68,7 +68,7 @@ namespace NexusApi.Controllers.V1
                     date = DateTime.Now,
                     message = ex.StackTrace,
                     model_id = -1,
-                    action_responsible = -1
+                    op_responsible_id  = -1
                 });
 
                 return Conflict(ex.StackTrace);

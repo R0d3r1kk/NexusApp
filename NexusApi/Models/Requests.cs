@@ -8,19 +8,19 @@ namespace NexusApi.Models
     public class DeleteRequest
     {
         public int id { get; set; }
-        public int responsible_id { get; set; }
+        public int op_responsible_id { get; set; }
     }
 
     public class GetRequest
     {
         public int id { get; set; }
-        public int responsible_id { get; set; }
+        public int op_responsible_id { get; set; }
     }
 
     public class ChangeTeamRequest
     {
         public int user_id { get; set; }
-        public int responsible_id { get; set; }
+        public int op_responsible_id { get; set; }
         public int new_team_id { get; set; }
     }
 

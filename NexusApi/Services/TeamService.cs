@@ -31,6 +31,7 @@ namespace NexusApi.Services
                 return false;
             try
             {
+                request.date = DateTime.Now;
                 _context.Logs.Add(request);
                 await _context.SaveChangesAsync();
                 return true;
