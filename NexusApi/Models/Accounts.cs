@@ -11,7 +11,7 @@ namespace NexusApi.Models
         public int account_id { get; set; }
         public string account_name { get; set; }
         public string account_client { get; set; }
-        public string team_id { get; set; }
+        public int team_id { get; set; }
         public DateTime date_created { get; set; }
 
     }

@@ -81,16 +81,18 @@ namespace NexusApi.Controllers.V1
         }
 
         [HttpGet("All")]
-        public async Task<ActionResult<UserModel>> GetAll()
+        public ActionResult<string> GetAll([FromQuery] string key)
         {
             try
             {
-                var users = _context.Users.ToList();
+                if (key == null)
+                    return BadRequest();
 
-                if (users != null)
+                var base64 = Extensions.getAll(_context, key);
+
+                if (base64 != null)
                 {
-                    var cypher = CryptoHelper.Encrypt(JsonConvert.SerializeObject(users), GlobalSettings.Key, GlobalSettings.Key.Substring(0, 16));
-                    return Ok(cypher);
+                    return Ok(base64);
                 }
                 else
                     return NotFound();

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using NexusApi.Context;
 using System;
+using System.Linq;
 
 namespace NexusApi.Helpers
 {
@@ -22,6 +24,31 @@ namespace NexusApi.Helpers
             }
 
             return result;
+        }
+
+        public static string getAll(NexusContext _context, string key)
+        {
+            switch (key)
+            {
+                case "users":
+                    var users = _context.Users.ToList();
+                    if (users != null)
+                    {
+                        var cypher = CryptoHelper.Encrypt(JsonConvert.SerializeObject(users), GlobalSettings.Key, GlobalSettings.Key.Substring(0, 16));
+                        return cypher;
+                    }
+                    return null;
+                case "accounts":
+                    var acc = _context.Accounts.ToList();
+                    if (acc != null)
+                    {
+                        var cypher = CryptoHelper.Encrypt(JsonConvert.SerializeObject(acc), GlobalSettings.Key, GlobalSettings.Key.Substring(0, 16));
+                        return cypher;
+                    }
+                    return null;
+                default:
+                    return null;
+            }
         }
     }
 }
