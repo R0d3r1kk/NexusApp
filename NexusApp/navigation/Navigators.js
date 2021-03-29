@@ -1,5 +1,4 @@
 import React from 'react';
-import {TouchableOpacity, FontAwesome5} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {primaryColor} from '../Settings';
@@ -9,6 +8,7 @@ import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import AddAccountScreen from '../screens/AddAccountScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -53,8 +53,9 @@ const DrawerStackNavigator = () => {
         itemStyle: {marginVertical: 5},
       }}>
       <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="Agregar " component={RegisterScreen} />
-      <Drawer.Screen name="Settings" component={SettingsScreen} />
+      <Drawer.Screen name="Agregar Usuario" component={RegisterScreen} />
+      <Drawer.Screen name="Agregar Cuenta" component={AddAccountScreen} />
+      <Drawer.Screen name="Configuracion" component={SettingsScreen} />
     </Drawer.Navigator>
   );
 };

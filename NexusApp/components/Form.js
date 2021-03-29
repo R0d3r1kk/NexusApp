@@ -2,10 +2,12 @@ import React, {useState} from 'react';
 import {
   Text,
   StyleSheet,
-  KeyboardAvoidingView,
+  Alert,
   Animated,
   View,
   Image,
+  ScrollView,
+  Dimensions,
 } from 'react-native';
 import {hasValidationError, validateFields} from './Validations';
 import SubmitButton from './SubmitButton';
@@ -23,7 +25,7 @@ const getInitialState = fieldKeys => {
 
 const animationTimeout = () => new Promise(resolve => setTimeout(resolve, 300));
 
-const Form = ({title, fields, buttonText, action, afterSubmit}) => {
+const Form = ({title, fields, buttonText, action, afterSubmit, okNessage}) => {
   const fieldKeys = Object.keys(fields);
   const [values, setValues] = useState(getInitialState(fieldKeys));
   const [errorMessage, setErrorMessage] = useState('');
@@ -76,10 +78,14 @@ const Form = ({title, fields, buttonText, action, afterSubmit}) => {
         action(...getValues()),
         animationTimeout(),
       ]);
+      if (okNessage) {
+        Alert.alert('Bienvenid@!!', okNessage);
+      }
       await afterSubmit(result);
       setSubmitting(false);
       fadeIn();
     } catch (e) {
+      Alert.alert('Upss', e.error);
       setErrorMessage(e.error);
       setSubmitting(false);
       fadeIn();
@@ -87,7 +93,10 @@ const Form = ({title, fields, buttonText, action, afterSubmit}) => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="height" enabled>
+    <ScrollView
+      contentContainerStyle={styles.scroll}
+      keyboardDismissMode="interactive"
+      maintainVisibleContentPosition={true}>
       <Text style={styles.title}>{title}</Text>
       <Animated.View style={{opacity}}>
         {isSubmitting && (
@@ -117,7 +126,7 @@ const Form = ({title, fields, buttonText, action, afterSubmit}) => {
         isSubmitting={isSubmitting}
       />
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
@@ -128,6 +137,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 15,
     position: 'relative',
+    height: Dimensions.get('window').height,
   },
   activityIndicatorContainer: {
     position: 'absolute',
@@ -157,6 +167,11 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     fontWeight: 'bold',
     color: '#202a34',
+  },
+  scroll: {
+    flexGrow: 1,
+    alignItems: 'center',
+    padding: 16,
   },
 });
 export default Form;

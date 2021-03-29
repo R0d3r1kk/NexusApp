@@ -15,6 +15,7 @@ class RegisterScreen extends React.Component {
     this.state = {
       userdata: {},
     };
+    this.handleResult = this.handleResult.bind(this);
   }
 
   componentDidMount() {
@@ -27,7 +28,9 @@ class RegisterScreen extends React.Component {
 
   handleResult(result) {
     try {
-      console.log(result);
+      if (result) {
+        this.props.navigation.navigate('Home');
+      }
     } catch (e) {
       console.log(e);
     }
@@ -96,6 +99,40 @@ class RegisterScreen extends React.Component {
               ],
             },
             validators: [validateOption],
+          },
+          eng_level: {
+            label: 'English Level',
+            input: {
+              type: 'select',
+              selectedValue: '',
+              items: [
+                {label: 'Básico', value: 'Basic (A1)'},
+                {label: 'Intermedio', value: 'Intermedio (B1)'},
+                {label: 'Avanzado', value: 'Advanced (C1)'},
+                {label: 'Lengua nativa', value: 'Native lenguage'},
+              ],
+            },
+            validators: [validateOption],
+          },
+          tecnic_knowledge: {
+            label: 'Tecnic Knowledge',
+            input: {
+              type: 'text',
+            },
+            validators: [validateContent],
+            inputProps: {
+              keyboardType: 'default',
+            },
+          },
+          cv_link: {
+            label: 'CV LINK (Google Drive)',
+            input: {
+              type: 'text',
+            },
+            validators: [validateContent],
+            inputProps: {
+              keyboardType: 'default',
+            },
           },
           op_responsible_id: {
             input: {

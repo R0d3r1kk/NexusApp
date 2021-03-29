@@ -41,7 +41,7 @@ export default class Field extends React.Component {
             <RNPickerSelect
               key={fieldName}
               useNativeAndroidPickerStyle={false}
-              fixAndroidTouchableBug={false}
+              fixAndroidTouchableBug={true}
               placeholder={{
                 label: 'Select ' + field.label,
                 value: null,

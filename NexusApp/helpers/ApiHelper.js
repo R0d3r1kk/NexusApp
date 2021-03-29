@@ -1,3 +1,4 @@
+import {Alert} from 'react-native';
 import {getToken, DeleteStorage, GenerateToken} from './TokenHelper';
 import {AUTH_URL, NKEY} from '../Settings';
 import {encryptData, decryptData} from './CryptoHelper';
@@ -71,17 +72,22 @@ async function checkStatus(response) {
       base64 = await response.json();
       return await decryptData(base64, NKEY, NKEY.substring(0, 16));
     case 201:
-      base64 = await response.json();
-      return await decryptData(base64, NKEY, NKEY.substring(0, 16));
+      //base64 = await response.json();
+      //return await decryptData(base64, NKEY, NKEY.substring(0, 16));
+      return await response.json();
     case 401:
       await DeleteStorage();
-      throw {error: 'Acceso denegado'};
+      throw {error: 'Sessión expirada...'};
     case 404:
       throw {error: 'Datos no encontrados, intenta de nuevo...'};
     case 500:
       //await DeleteStorage();
-      base64 = await response.json();
-      throw {error: base64};
+      let res = await response.json();
+      if (res) {
+        throw {error: res};
+      } else {
+        throw {error: 'Conexión faliida, intenta de nuevo...'};
+      }
     default:
       if (response.ok) {
         const bass64 = await response.json();
@@ -89,7 +95,7 @@ async function checkStatus(response) {
       } else {
         let error = new Error(response.statusText);
         error.response = response;
-        throw error;
+        throw {error: error};
       }
   }
 }

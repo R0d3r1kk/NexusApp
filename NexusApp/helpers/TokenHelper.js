@@ -12,10 +12,16 @@ export const DeleteStorage = async () => {
 };
 
 export const getUser = async navigation => {
+  let user = null;
   try {
     let token = await checkToken(navigation);
-    let user = JSON.parse(token.UserData);
-    return user;
+    if (token) {
+      if (token.UserData) {
+        user = JSON.parse(token.UserData);
+        return user;
+      }
+    }
+    rollBack(navigation);
   } catch (e) {
     console.log(e);
     return null;
