@@ -15,5 +15,8 @@ namespace NexusApi.Models
         public int team_id { get; set; }
         [Column(TypeName = "datetime2")]
         public DateTime date_created { get; set; }
+        public string eng_level { get; set; }
+        public string tecnic_knowledge { get; set; }
+        public string cv_link { get; set; }
     }
 }

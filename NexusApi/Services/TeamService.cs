@@ -14,6 +14,7 @@ namespace NexusApi.Services
                 return false;
             try
             {
+                request.date_created = DateTime.Now;
                 _context.CTeams.Add(request);
                 await _context.SaveChangesAsync();
                 return true;

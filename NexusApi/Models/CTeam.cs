@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace NexusApi.Models
 {
@@ -7,5 +8,6 @@ namespace NexusApi.Models
         [Key]
         public int team_id { get; set; }
         public string name { get; set; }
+        public DateTime date_created { get; set; }
     }
 }
