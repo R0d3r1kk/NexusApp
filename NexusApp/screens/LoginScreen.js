@@ -7,7 +7,7 @@ import jwt_decode from 'jwt-decode';
 import {setToken} from '../helpers/TokenHelper';
 
 const LoginScreen = ({navigation}) => {
-  const handleResult = async result => {
+  const handleResult = result => {
     try {
       setToken(result);
       var userToken = jwt_decode(result);

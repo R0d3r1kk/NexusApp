@@ -2,6 +2,7 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {getUser} from '../helpers/TokenHelper';
 import Userlist from '../components/Userlist';
+import AccountList from '../components/AccountList';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Userlist />
+        <AccountList />
       </View>
     );
   }

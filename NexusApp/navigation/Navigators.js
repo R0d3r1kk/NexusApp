@@ -52,7 +52,7 @@ const DrawerStackNavigator = () => {
         activeTintColor: primaryColor,
         itemStyle: {marginVertical: 5},
       }}>
-      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Usuarios" component={HomeScreen} />
       <Drawer.Screen name="Agregar Usuario" component={RegisterScreen} />
       <Drawer.Screen name="Agregar Cuenta" component={AddAccountScreen} />
       <Drawer.Screen name="Configuracion" component={SettingsScreen} />

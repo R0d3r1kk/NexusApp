@@ -79,6 +79,7 @@ async function checkStatus(response) {
       await DeleteStorage();
       throw {error: 'Sessión expirada...'};
     case 404:
+    case 409:
       throw {error: 'Datos no encontrados, intenta de nuevo...'};
     case 500:
       //await DeleteStorage();

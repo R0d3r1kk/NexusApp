@@ -1,16 +1,13 @@
-import React, {useState} from 'react';
-import {StyleSheet} from 'react-native';
+import React from 'react';
 import Form from '../components/Form';
 import {addAccount} from '../helpers/Gestion';
 import {validateContent, validateOption} from '../components/Validations';
-import {getUser} from '../helpers/TokenHelper';
 
 const AddAccountScreen = ({navigation}) => {
-  const [user, setUser] = useState(async () => await getUser(navigation));
   const handleResult = async result => {
     try {
       if (result) {
-        navigation.replace('Accounts');
+        navigation.replace('Home');
       }
     } catch (e) {
       console.log(e);
@@ -31,7 +28,7 @@ const AddAccountScreen = ({navigation}) => {
           },
           validators: [validateContent],
           inputProps: {
-            keyboardType: 'deafutl',
+            keyboardType: 'default',
           },
         },
         account_client: {
@@ -41,7 +38,7 @@ const AddAccountScreen = ({navigation}) => {
           },
           validators: [validateContent],
           inputProps: {
-            keyboardType: 'deafutl',
+            keyboardType: 'default',
           },
         },
         team_id: {
@@ -57,25 +54,14 @@ const AddAccountScreen = ({navigation}) => {
           },
           validators: [validateOption],
         },
-        operation_responsible: {
+        op_responsible_id: {
           input: {
             type: 'hidden',
-            value: user ? user.user_id : '0',
           },
         },
       }}
     />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 15,
-    position: 'relative',
-  },
-});
 
 export default AddAccountScreen;

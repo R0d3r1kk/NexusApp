@@ -9,10 +9,12 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {hasValidationError, validateFields} from './Validations';
 import SubmitButton from './SubmitButton';
 import Field from './Field';
 import {primaryColor} from '../Settings';
+import {getUser} from '../helpers/TokenHelper';
 
 const getInitialState = fieldKeys => {
   const state = {};
@@ -34,6 +36,7 @@ const Form = ({title, fields, buttonText, action, afterSubmit, okNessage}) => {
   );
   const [opacity] = useState(new Animated.Value(1));
   const [isSubmitting, setSubmitting] = useState(false);
+  const navigation = useNavigation();
 
   const onChangeValue = (key, value) => {
     const newState = {...values, [key]: value};
@@ -62,6 +65,11 @@ const Form = ({title, fields, buttonText, action, afterSubmit, okNessage}) => {
     setSubmitting(true);
     setErrorMessage('');
     setValidationErrors(getInitialState(fieldKeys));
+
+    var user = await getUser(navigation);
+    if (user) {
+      values.op_responsible_id = user.user_id;
+    }
 
     const errors = validateFields(fields, values);
     fadeOut();

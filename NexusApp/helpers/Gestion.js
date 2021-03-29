@@ -1,8 +1,8 @@
 import {get, post} from './ApiHelper';
 import {CRU_URL} from '../Settings';
 
-export const Users = async () => {
-  return await get(CRU_URL + 'All');
+export const Users = () => {
+  return get(CRU_URL + 'All?key=users');
 };
 
 export const AddUser = (
@@ -29,16 +29,20 @@ export const AddUser = (
   });
 };
 
-export const addAccount = ({
+export const Accounts = () => {
+  return get(CRU_URL + 'All?key=accounts');
+};
+
+export const addAccount = (
   account_client,
   account_name,
+  op_responsible_id,
   team_id,
-  operation_responsible,
-}) => {
-  return post(CRU_URL + 'AddUser', {
+) => {
+  return post(CRU_URL + 'AddAccount', {
     account_name,
     account_client,
     team_id,
-    operation_responsible,
+    op_responsible_id,
   });
 };
