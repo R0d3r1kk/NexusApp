@@ -1,11 +1,11 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import Userlist from '../components/Userlist';
+import AccountList from '../components/AccountList';
 
-const HomeScreen = ({navigation}) => {
+const AccountsScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <Userlist />
+      <AccountList />
     </View>
   );
 };
@@ -14,4 +14,4 @@ const styles = StyleSheet.create({
   container: {flex: 1, alignItems: 'center', justifyContent: 'center'},
 });
 
-export default HomeScreen;
+export default AccountsScreen;

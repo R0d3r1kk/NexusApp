@@ -7,7 +7,7 @@ const AddAccountScreen = ({navigation}) => {
   const handleResult = async result => {
     try {
       if (result) {
-        navigation.replace('Home');
+        navigation.navigate('Cuentas');
       }
     } catch (e) {
       console.log(e);

@@ -1,12 +1,13 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import Form from '../components/Form';
 import {login} from '../helpers/Authentication';
 import {validateContent, validateLength} from '../components/Validations';
 import jwt_decode from 'jwt-decode';
 import {setToken} from '../helpers/TokenHelper';
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = () => {
+  const navigation = useNavigation();
   const handleResult = result => {
     try {
       setToken(result);
@@ -50,15 +51,5 @@ const LoginScreen = ({navigation}) => {
     />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 15,
-    position: 'relative',
-  },
-});
 
 export default LoginScreen;

@@ -1,5 +1,4 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import {post} from './ApiHelper';
 import {TKN_URL} from '../Settings';
 import jwt_decode from 'jwt-decode';
 
@@ -7,6 +6,27 @@ export const DeleteStorage = async () => {
   try {
     await AsyncStorage.clear();
   } catch (e) {
+    return null;
+  }
+};
+
+export const getOnlyUser = async () => {
+  let user = null;
+  try {
+    let tkn = await getToken();
+    if (tkn) {
+      let token = jwt_decode(tkn);
+      if (isExpired(token)) {
+        return null;
+      }
+      if (token.UserData) {
+        user = JSON.parse(token.UserData);
+        return user;
+      }
+      return null;
+    }
+  } catch (e) {
+    console.log(e);
     return null;
   }
 };

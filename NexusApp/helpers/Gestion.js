@@ -46,3 +46,11 @@ export const addAccount = (
     op_responsible_id,
   });
 };
+
+export const Teams = () => {
+  return get(CRU_URL + 'All?key=teams');
+};
+
+export const UserTeamChanges = () => {
+  return get(CRU_URL + 'All?key=user_team_changes');
+};

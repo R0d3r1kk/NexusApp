@@ -1,6 +1,11 @@
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItem,
+} from '@react-navigation/drawer';
 import {primaryColor} from '../Settings';
 
 import SplashScreen from '../screens/SplashScreen';
@@ -9,6 +14,8 @@ import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import AddAccountScreen from '../screens/AddAccountScreen';
+import {logout} from '../helpers/Authentication';
+import AccountsScreen from '../screens/AccountsScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -54,10 +61,21 @@ const DrawerStackNavigator = () => {
       }}>
       <Drawer.Screen name="Usuarios" component={HomeScreen} />
       <Drawer.Screen name="Agregar Usuario" component={RegisterScreen} />
+      <Drawer.Screen name="Cuentas" component={AccountsScreen} />
       <Drawer.Screen name="Agregar Cuenta" component={AddAccountScreen} />
-      <Drawer.Screen name="Configuracion" component={SettingsScreen} />
+      {/* <Drawer.Screen name="Configuracion" component={SettingsScreen} /> */}
+      <Drawer.Screen name="Configuración" component={DrawerLogOut} />
     </Drawer.Navigator>
   );
 };
+
+function DrawerLogOut(props) {
+  const navigation = useNavigation();
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItem label="Cerrar Sessión" onPress={() => logout(navigation)} />
+    </DrawerContentScrollView>
+  );
+}
 
 export {AuthStackNavigator, MainStackNavigator};

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Form from '../components/Form';
 import {AddUser} from '../helpers/Gestion';
+import {Teams} from '../helpers/Gestion';
 
 import {
   validateContent,
@@ -9,10 +10,35 @@ import {
 } from '../components/Validations';
 
 const RegisterScreen = ({navigation}) => {
+  const [teams, setTeams] = useState([]);
+
+  useEffect(() => {
+    let isActive = true;
+    const fetchData = async () => {
+      try {
+        let data = await Teams();
+        if (isActive) {
+          let list = data.map(d => {
+            return {label: d.name, value: d.team_id};
+          });
+          setTeams(list);
+        } else {
+          isActive = false;
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+    return () => {
+      isActive = false;
+    };
+  }, [teams]);
+
   const handleResult = result => {
     try {
       if (result) {
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('Usuarios');
       }
     } catch (e) {
       console.log(e);
@@ -74,11 +100,7 @@ const RegisterScreen = ({navigation}) => {
           input: {
             type: 'select',
             selectedValue: '',
-            items: [
-              {label: 'Team 1', value: '0'},
-              {label: 'Team 2', value: '1'},
-              {label: 'Team 3', value: '2'},
-            ],
+            items: teams,
           },
           validators: [validateOption],
         },

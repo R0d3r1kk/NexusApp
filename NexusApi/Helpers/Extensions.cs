@@ -46,6 +46,22 @@ namespace NexusApi.Helpers
                         return cypher;
                     }
                     return null;
+                case "teams":
+                    var teams = _context.CTeams.ToList();
+                    if (teams != null)
+                    {
+                        var cypher = CryptoHelper.Encrypt(JsonConvert.SerializeObject(teams), GlobalSettings.Key, GlobalSettings.Key.Substring(0, 16));
+                        return cypher;
+                    }
+                    return null;
+                case "user_team_changes":
+                    var teamchanges = _context.UserTeamChanges.ToList();
+                    if (teamchanges != null)
+                    {
+                        var cypher = CryptoHelper.Encrypt(JsonConvert.SerializeObject(teamchanges), GlobalSettings.Key, GlobalSettings.Key.Substring(0, 16));
+                        return cypher;
+                    }
+                    return null;
                 default:
                     return null;
             }

@@ -7,5 +7,5 @@ export const login = (email, password) => {
 
 export const logout = async navigation => {
   await DeleteStorage();
-  navigation.navigate('login');
+  navigation.replace('Login');
 };

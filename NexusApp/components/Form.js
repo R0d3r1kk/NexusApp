@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   StyleSheet,
@@ -9,12 +9,11 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import {hasValidationError, validateFields} from './Validations';
 import SubmitButton from './SubmitButton';
 import Field from './Field';
 import {primaryColor} from '../Settings';
-import {getUser} from '../helpers/TokenHelper';
+import {getOnlyUser} from '../helpers/TokenHelper';
 
 const getInitialState = fieldKeys => {
   const state = {};
@@ -27,16 +26,34 @@ const getInitialState = fieldKeys => {
 
 const animationTimeout = () => new Promise(resolve => setTimeout(resolve, 300));
 
-const Form = ({title, fields, buttonText, action, afterSubmit, okNessage}) => {
+const Form = ({title, fields, buttonText, action, afterSubmit, okMessage}) => {
   const fieldKeys = Object.keys(fields);
   const [values, setValues] = useState(getInitialState(fieldKeys));
+  const [user, setUser] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
   const [validationErrors, setValidationErrors] = useState(
     getInitialState(fieldKeys),
   );
   const [opacity] = useState(new Animated.Value(1));
   const [isSubmitting, setSubmitting] = useState(false);
-  const navigation = useNavigation();
+
+  useEffect(() => {
+    let isActive = true;
+    const fetchData = async () => {
+      try {
+        let data = await getOnlyUser();
+        if (isActive) {
+          setUser(data);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+    return () => {
+      isActive = false;
+    };
+  }, [user]);
 
   const onChangeValue = (key, value) => {
     const newState = {...values, [key]: value};
@@ -66,11 +83,6 @@ const Form = ({title, fields, buttonText, action, afterSubmit, okNessage}) => {
     setErrorMessage('');
     setValidationErrors(getInitialState(fieldKeys));
 
-    var user = await getUser(navigation);
-    if (user) {
-      values.op_responsible_id = user.user_id;
-    }
-
     const errors = validateFields(fields, values);
     fadeOut();
     if (hasValidationError(errors)) {
@@ -82,17 +94,21 @@ const Form = ({title, fields, buttonText, action, afterSubmit, okNessage}) => {
 
     fadeOut();
     try {
+      if (user) {
+        values.op_responsible_id = user.user_id;
+      }
       const [result] = await Promise.all([
         action(...getValues()),
         animationTimeout(),
       ]);
-      if (okNessage) {
-        Alert.alert('Bienvenid@!!', okNessage);
+      if (okMessage) {
+        Alert.alert('Bienvenid@!!', okMessage);
       }
       await afterSubmit(result);
       setSubmitting(false);
       fadeIn();
     } catch (e) {
+      console.log(e);
       Alert.alert('Upss', e.error);
       setErrorMessage(e.error);
       setSubmitting(false);
