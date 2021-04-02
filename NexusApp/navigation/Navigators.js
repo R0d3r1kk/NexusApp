@@ -36,7 +36,9 @@ const AuthStackNavigator = () => {
         component={SplashScreen}
         options={{headerShown: false}}
       />
-      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Login">
+        {props => <LoginScreen props={props} />}
+      </Stack.Screen>
       <Stack.Screen name="Home" component={DrawerStackNavigator} />
     </Stack.Navigator>
   );

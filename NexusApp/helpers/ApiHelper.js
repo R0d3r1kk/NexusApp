@@ -83,11 +83,16 @@ async function checkStatus(response) {
       throw {error: 'Datos no encontrados, intenta de nuevo...'};
     case 500:
       //await DeleteStorage();
-      let res = response.text();
-      console.log(res);
-      if (res) {
-        throw {error: res};
-      } else {
+      try {
+        let res = response.text();
+        console.log(res);
+        if (res) {
+          throw {error: res};
+        } else {
+          throw {error: 'Conexión faliida, intenta de nuevo...'};
+        }
+      } catch (e) {
+        console.log(e);
         throw {error: 'Conexión faliida, intenta de nuevo...'};
       }
     default:

@@ -113,8 +113,6 @@ const Form = ({
     try {
       if (user) {
         values.op_responsible_id = user.user_id;
-      } else {
-        await rollBack(navigation);
       }
 
       const [result] = await Promise.all([
