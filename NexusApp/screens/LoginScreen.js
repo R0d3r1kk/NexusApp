@@ -22,6 +22,7 @@ const LoginScreen = () => {
 
   return (
     <Form
+      navigation={navigation}
       title="Acceso!!"
       action={login}
       afterSubmit={handleResult}

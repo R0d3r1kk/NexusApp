@@ -39,7 +39,7 @@ const RegisterScreen = ({navigation}) => {
   const handleResult = result => {
     try {
       if (result) {
-        this.props.navigation.navigate('Usuarios');
+        navigation.navigate('Usuarios');
       }
     } catch (e) {
       console.log(e);
@@ -48,6 +48,7 @@ const RegisterScreen = ({navigation}) => {
 
   return (
     <Form
+      navigation={navigation}
       title="Usuario"
       action={AddUser}
       afterSubmit={handleResult}

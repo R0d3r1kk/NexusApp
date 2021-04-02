@@ -16,6 +16,7 @@ const AddAccountScreen = ({navigation}) => {
 
   return (
     <Form
+      navigation={navigation}
       title="Agregar Cuenta"
       action={addAccount}
       afterSubmit={handleResult}

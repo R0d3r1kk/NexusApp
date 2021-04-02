@@ -9,7 +9,7 @@ const getHeaders = async () => {
   if (token === null) {
     token = await GenerateToken();
   }
-  const headers = {
+  let headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   };
@@ -22,9 +22,9 @@ const getHeaders = async () => {
 };
 
 export const postFromAuth = async (destination, body) => {
-  const headers = await getHeaders();
-  const data = await encryptData(JSON.stringify(body), NKEY);
-  const result = await fetch(AUTH_URL + destination, {
+  let headers = await getHeaders();
+  let data = await encryptData(JSON.stringify(body), NKEY);
+  let result = await fetch(AUTH_URL + destination, {
     method: 'POST',
     headers,
     //body: JSON.stringify(body),
@@ -34,9 +34,9 @@ export const postFromAuth = async (destination, body) => {
 };
 
 export const getFromAuth = async destination => {
-  const headers = await getHeaders();
+  let headers = await getHeaders();
 
-  const result = await fetch(AUTH_URL + destination, {
+  let result = await fetch(AUTH_URL + destination, {
     method: 'GET',
     headers,
   });
@@ -44,9 +44,9 @@ export const getFromAuth = async destination => {
 };
 
 export const get = async url => {
-  const headers = await getHeaders();
+  let headers = await getHeaders();
 
-  const result = await fetch(url, {
+  let result = await fetch(url, {
     method: 'GET',
     headers,
   });
@@ -54,9 +54,9 @@ export const get = async url => {
 };
 
 export const post = async (url, body) => {
-  const headers = await getHeaders();
-  const data = await encryptData(JSON.stringify(body), NKEY);
-  const result = await fetch(url, {
+  let headers = await getHeaders();
+  let data = await encryptData(JSON.stringify(body), NKEY);
+  let result = await fetch(url, {
     method: 'POST',
     headers,
     //body: JSON.stringify(body),
@@ -83,8 +83,8 @@ async function checkStatus(response) {
       throw {error: 'Datos no encontrados, intenta de nuevo...'};
     case 500:
       //await DeleteStorage();
-      console.log(response.json());
-      let res = await response.json();
+      let res = response.text();
+      console.log(res);
       if (res) {
         throw {error: res};
       } else {

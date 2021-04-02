@@ -13,27 +13,3 @@ import renderer from 'react-test-renderer';
 it('renders correctly', () => {
   renderer.create(<App />);
 });
-
-test('the data is a correct list of users', async () => {
-  await expect(Users()).resolves.toBe('Users');
-});
-
-test('the methos usesrs fails with an error', async () => {
-  await expect(Users()).rejects.toMatch('error');
-});
-
-test('the data is a correct list of accounts', async () => {
-  await expect(Accounts()).resolves.toBe('Accounts');
-});
-
-test('the method accounts fails with an error', async () => {
-  await expect(Accounts()).rejects.toMatch('error');
-});
-
-test('the data is a correct list of teams', async () => {
-  await expect(Teams()).resolves.toBe('Teams');
-});
-
-test('the method Teams fails with an error', async () => {
-  await expect(Teams()).rejects.toMatch('error');
-});

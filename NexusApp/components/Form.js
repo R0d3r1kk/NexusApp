@@ -13,7 +13,7 @@ import {hasValidationError, validateFields} from './Validations';
 import SubmitButton from './SubmitButton';
 import Field from './Field';
 import {primaryColor} from '../Settings';
-import {getOnlyUser} from '../helpers/TokenHelper';
+import {getOnlyUser, rollBack} from '../helpers/TokenHelper';
 
 const getInitialState = fieldKeys => {
   const state = {};
@@ -26,7 +26,15 @@ const getInitialState = fieldKeys => {
 
 const animationTimeout = () => new Promise(resolve => setTimeout(resolve, 300));
 
-const Form = ({title, fields, buttonText, action, afterSubmit, okMessage}) => {
+const Form = ({
+  navigation,
+  title,
+  fields,
+  buttonText,
+  action,
+  afterSubmit,
+  okMessage,
+}) => {
   const fieldKeys = Object.keys(fields);
   const [values, setValues] = useState(getInitialState(fieldKeys));
   const [user, setUser] = useState({});
@@ -43,6 +51,15 @@ const Form = ({title, fields, buttonText, action, afterSubmit, okMessage}) => {
       try {
         let data = await getOnlyUser();
         if (isActive) {
+          if (data) {
+            if (data.error) {
+              await rollBack(navigation);
+            }
+          } else {
+            if (user) {
+              isActive = false;
+            }
+          }
           setUser(data);
         }
       } catch (e) {
@@ -53,7 +70,7 @@ const Form = ({title, fields, buttonText, action, afterSubmit, okMessage}) => {
     return () => {
       isActive = false;
     };
-  }, [user]);
+  }, [user, navigation]);
 
   const onChangeValue = (key, value) => {
     const newState = {...values, [key]: value};
@@ -96,7 +113,10 @@ const Form = ({title, fields, buttonText, action, afterSubmit, okMessage}) => {
     try {
       if (user) {
         values.op_responsible_id = user.user_id;
+      } else {
+        await rollBack(navigation);
       }
+
       const [result] = await Promise.all([
         action(...getValues()),
         animationTimeout(),

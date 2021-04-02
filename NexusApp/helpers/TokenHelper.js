@@ -17,17 +17,17 @@ export const getOnlyUser = async () => {
     if (tkn) {
       let token = jwt_decode(tkn);
       if (isExpired(token)) {
-        return null;
+        throw {error: 'Session expirada!!, vuleve a iniciar sessión'};
       }
       if (token.UserData) {
         user = JSON.parse(token.UserData);
         return user;
       }
-      return null;
+      throw {error: 'Session expirada!!, vuleve a iniciar sessión'};
     }
   } catch (e) {
     console.log(e);
-    return null;
+    throw {error: 'Session expirada!!, vuleve a iniciar sessión'};
   }
 };
 
@@ -35,16 +35,11 @@ export const getUser = async navigation => {
   let user = null;
   try {
     let token = await checkToken(navigation);
-    if (token) {
-      if (token.UserData) {
-        user = JSON.parse(token.UserData);
-        return user;
-      }
-    }
-    rollBack(navigation);
+    user = JSON.parse(token.UserData);
+    return user;
   } catch (e) {
     console.log(e);
-    return null;
+    await rollBack(navigation);
   }
 };
 
@@ -53,10 +48,16 @@ export const checkToken = async navigation => {
     let tkn = await getToken();
     if (tkn) {
       let token = jwt_decode(tkn);
-      if (isExpired(token)) {
-        await rollBack(navigation);
+      if (token) {
+        if (token.UserData) {
+          if (isExpired(token)) {
+            await rollBack(navigation);
+          }
+          return token;
+        } else {
+          await rollBack(navigation);
+        }
       }
-      return token;
     }
 
     await rollBack(navigation);
@@ -66,9 +67,11 @@ export const checkToken = async navigation => {
   }
 };
 
-const rollBack = async navigation => {
+export const rollBack = async navigation => {
   await DeleteStorage();
-  navigation.replace('Login');
+  navigation.replace('Login', {
+    error: 'Session expirada!!, vuleve a iniciar sessión',
+  });
 };
 
 //TODO: Fix de fecha
@@ -82,7 +85,9 @@ export const getToken = async () => {
   try {
     return await AsyncStorage.getItem('@auth_token');
   } catch (e) {
-    return null;
+    throw {
+      error: 'Session expirada!!, vuleve a iniciar sessión',
+    };
   }
 };
 
@@ -90,7 +95,9 @@ export const setToken = async token => {
   try {
     await AsyncStorage.setItem('@auth_token', token);
   } catch (e) {
-    return null;
+    throw {
+      error: 'Session expirada!!, vuleve a iniciar sessión',
+    };
   }
 };
 
@@ -112,8 +119,14 @@ export const GenerateToken = async () => {
       await setToken(res);
       return res;
     }
+
+    throw {
+      error: 'Imposible generar nuevo token, intenta de nuevo...',
+    };
   } catch (e) {
-    return null;
+    throw {
+      error: 'Imposible generar nuevo token, intenta de nuevo...',
+    };
   }
 };
 
