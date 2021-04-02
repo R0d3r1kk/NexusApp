@@ -62,7 +62,7 @@ namespace NexusApi.Controllers.V1
             }
             catch (ArgumentException ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new { error = ex.Message });
             }
             catch (Exception ex)
             {
@@ -76,7 +76,7 @@ namespace NexusApi.Controllers.V1
                     op_responsible_id = request.op_responsible_id
                 });
 
-                return Conflict(ex.StackTrace);
+                return Conflict(new { error = ex.StackTrace });
             }
         }
 
@@ -99,11 +99,11 @@ namespace NexusApi.Controllers.V1
             }
             catch (ArgumentException ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new { error = ex.Message });
             }
             catch (Exception ex)
             {
-                return Conflict(ex.StackTrace);
+                return Conflict(new { error = ex.StackTrace });
             }
         }
 
@@ -140,7 +140,7 @@ namespace NexusApi.Controllers.V1
             }
             catch (ArgumentException ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new { error = ex.Message });
             }
             catch (Exception ex)
             {
@@ -154,7 +154,7 @@ namespace NexusApi.Controllers.V1
                     op_responsible_id = request.op_responsible_id
                 });
 
-                return Conflict(ex.StackTrace);
+                return Conflict(new { error = ex.StackTrace });
             }
 
         }
@@ -189,7 +189,7 @@ namespace NexusApi.Controllers.V1
             }
             catch (ArgumentException ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new { error = ex.Message });
             }
             catch (Exception ex)
             {
@@ -203,7 +203,7 @@ namespace NexusApi.Controllers.V1
                     op_responsible_id = request.op_responsible_id
                 });
 
-                return Conflict(ex.StackTrace);
+                return Conflict(new { error = ex.StackTrace });
             }
 
         }
@@ -238,7 +238,7 @@ namespace NexusApi.Controllers.V1
             }
             catch (ArgumentException ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new { error = ex.Message });
             }
             catch (Exception ex)
             {
@@ -252,7 +252,7 @@ namespace NexusApi.Controllers.V1
                     op_responsible_id = request.op_responsible_id
                 });
 
-                return Conflict(ex.StackTrace);
+                return Conflict(new { error = ex.StackTrace });
             }
 
         }
@@ -286,7 +286,7 @@ namespace NexusApi.Controllers.V1
             }
             catch (ArgumentException ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new { error = ex.Message });
             }
             catch (Exception ex)
             {
@@ -300,7 +300,7 @@ namespace NexusApi.Controllers.V1
                     op_responsible_id = request.op_responsible_id
                 });
 
-                return Conflict(ex.StackTrace);
+                return Conflict(new { error = ex.StackTrace });
             }
         }
 
@@ -334,7 +334,7 @@ namespace NexusApi.Controllers.V1
             }
             catch (ArgumentException ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new { error = ex.Message });
             }
             catch (Exception ex)
             {
@@ -348,7 +348,7 @@ namespace NexusApi.Controllers.V1
                     op_responsible_id = request.op_responsible_id
                 });
 
-                return Conflict(ex.StackTrace);
+                return Conflict(new { error = ex.StackTrace });
             }
         }
 
@@ -382,7 +382,7 @@ namespace NexusApi.Controllers.V1
             }
             catch (ArgumentException ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new { error = ex.Message });
             }
             catch (Exception ex)
             {
@@ -396,7 +396,7 @@ namespace NexusApi.Controllers.V1
                     op_responsible_id = request.op_responsible_id
                 });
 
-                return Conflict(ex.StackTrace);
+                return Conflict(new { error = ex.StackTrace });
             }
 
         }
@@ -431,7 +431,7 @@ namespace NexusApi.Controllers.V1
             }
             catch (ArgumentException ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new { error = ex.Message });
             }
             catch (Exception ex)
             {
@@ -445,7 +445,7 @@ namespace NexusApi.Controllers.V1
                     op_responsible_id = request.op_responsible_id
                 });
 
-                return Conflict(ex.StackTrace);
+                return Conflict(new { error = ex.StackTrace });
             }
 
         }
@@ -479,7 +479,7 @@ namespace NexusApi.Controllers.V1
             }
             catch (ArgumentException ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new { error = ex.Message });
             }
             catch (Exception ex)
             {
@@ -493,7 +493,7 @@ namespace NexusApi.Controllers.V1
                     op_responsible_id = request.op_responsible_id
                 });
 
-                return Conflict(ex.StackTrace);
+                return Conflict(new { error = ex.StackTrace });
             }
         }
 
@@ -527,7 +527,7 @@ namespace NexusApi.Controllers.V1
             }
             catch (ArgumentException ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new { error = ex.Message });
             }
             catch (Exception ex)
             {
@@ -541,7 +541,7 @@ namespace NexusApi.Controllers.V1
                     op_responsible_id = request.op_responsible_id
                 });
 
-                return Conflict(ex.StackTrace);
+                return Conflict(new { error = ex.StackTrace });
             }
         }
 
@@ -575,7 +575,7 @@ namespace NexusApi.Controllers.V1
             }
             catch (ArgumentException ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new { error = ex.Message });
             }
             catch (Exception ex)
             {
@@ -589,7 +589,7 @@ namespace NexusApi.Controllers.V1
                     op_responsible_id = request.op_responsible_id
                 });
 
-                return Conflict(ex.StackTrace);
+                return Conflict(new { error = ex.StackTrace });
             }
 
         }
@@ -624,7 +624,7 @@ namespace NexusApi.Controllers.V1
             }
             catch (ArgumentException ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new { error = ex.Message });
             }
             catch (Exception ex)
             {
@@ -638,7 +638,7 @@ namespace NexusApi.Controllers.V1
                     op_responsible_id = request.op_responsible_id
                 });
 
-                return Conflict(ex.StackTrace);
+                return Conflict(new { error = ex.StackTrace });
             }
 
         }
@@ -672,7 +672,7 @@ namespace NexusApi.Controllers.V1
             }
             catch (ArgumentException ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new { error = ex.Message });
             }
             catch (Exception ex)
             {
@@ -686,7 +686,7 @@ namespace NexusApi.Controllers.V1
                     op_responsible_id = request.op_responsible_id
                 });
 
-                return Conflict(ex.StackTrace);
+                return Conflict(new { error = ex.StackTrace });
             }
         }
     }

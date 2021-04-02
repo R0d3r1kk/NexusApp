@@ -83,6 +83,7 @@ async function checkStatus(response) {
       throw {error: 'Datos no encontrados, intenta de nuevo...'};
     case 500:
       //await DeleteStorage();
+      console.log(response.json());
       let res = await response.json();
       if (res) {
         throw {error: res};

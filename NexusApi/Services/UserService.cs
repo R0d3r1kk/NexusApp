@@ -9,7 +9,7 @@ namespace NexusApi.Services
 {
     public class UserService : IUserService
     {
-        public async Task<bool> Add(NexusContext _context, Users request)
+        public async Task<bool> Add(NexusContext _context, AddUserRequest request)
         {
             if (request == null)
                 return false;
@@ -26,7 +26,8 @@ namespace NexusApi.Services
                         team_id = request.team_id,
                         user_id = request.user_id,
                         date_start = DateTime.Now,
-                        action = "ADDING USER TO TEAM"
+                        action = "ADDING USER TO TEAM",
+                        op_responsible_id = request.op_responsible_id
                     });
                     await _context.SaveChangesAsync();
                     return true;

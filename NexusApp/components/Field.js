@@ -80,8 +80,7 @@ export default class Field extends React.Component {
               style={styles.hiddenInput}
               value={option.value?.toString()}
               //onChangeText={text => onChange(fieldName, text)}
-              onLayout={() => onChange(fieldName, option.value)}
-              onFocus={() => onChange(fieldName, option.value)}
+              //onLayout={() => onChange(fieldName, option.value)}
             />
             <Text style={styles.error}>{error}</Text>
           </View>

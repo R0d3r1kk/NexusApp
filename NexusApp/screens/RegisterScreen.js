@@ -16,14 +16,15 @@ const RegisterScreen = ({navigation}) => {
     let isActive = true;
     const fetchData = async () => {
       try {
-        let data = await Teams();
+        let data = JSON.parse(await Teams());
         if (isActive) {
-          let list = data.map(d => {
-            return {label: d.name, value: d.team_id};
-          });
-          setTeams(list);
-        } else {
-          isActive = false;
+          if (data) {
+            let list = [];
+            for (let i = 0; i < data.length; i++) {
+              list.push({label: data[i].name, value: data[i].team_id});
+            }
+            setTeams(list);
+          }
         }
       } catch (e) {
         console.log(e);
