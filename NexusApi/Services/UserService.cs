@@ -15,22 +15,30 @@ namespace NexusApi.Services
                 return false;
             try
             {
-
+                var user = (Users)request;
                 var founded = _context.Users.SingleOrDefault(u => u.email == request.email);
                 if (founded == null)
                 {
                     request.date_created = DateTime.Now;
-                    _context.Users.Add(request);
-                    _context.UserTeamChanges.Add(new UserTeamChanges()
-                    {
-                        team_id = request.team_id,
-                        user_id = request.user_id,
-                        date_start = DateTime.Now,
-                        action = "ADDING USER TO TEAM",
-                        op_responsible_id = request.op_responsible_id
-                    });
+                    _context.Users.Add(user);
                     await _context.SaveChangesAsync();
-                    return true;
+
+                    founded = _context.Users.SingleOrDefault(u => u.email == request.email);
+                    if (founded != null)
+                    {
+                        _context.UserTeamChanges.Add(new UserTeamChanges()
+                        {
+                            team_id = founded.team_id,
+                            user_id = founded.user_id,
+                            date_start = DateTime.Now,
+                            action = "ADDING USER TO TEAM",
+                            op_responsible_id = request.op_responsible_id
+                        });
+                        await _context.SaveChangesAsync();
+                        return true;
+                    }
+                    else
+                        return false;
                 }
                 else
                     throw new ArgumentException("Este email ya existe");
