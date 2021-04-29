@@ -37,6 +37,32 @@ export const AddUser = (
   });
 };
 
+export const EditUser = (
+  cv_link,
+  email,
+  eng_level,
+  name,
+  op_responsible_id,
+  password,
+  session_id,
+  team_id,
+  tecnic_knowledge,
+) => {
+  return post(CRU_URL + 'EditUser', {
+    name,
+    email,
+    password,
+    session_id,
+    team_id,
+    eng_level,
+    tecnic_knowledge,
+    cv_link,
+    op_responsible_id,
+  });
+};
+
+
+
 export const Accounts = () => {
   return get(CRU_URL + 'All?key=accounts');
 };
@@ -54,6 +80,8 @@ export const addAccount = (
     op_responsible_id,
   });
 };
+
+
 
 export const Teams = () => {
   return get(CRU_URL + 'All?key=teams');

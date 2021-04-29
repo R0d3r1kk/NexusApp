@@ -1,3 +1,4 @@
+import {AddUser, EditUser} from '../helpers/Gestion';
 import React, {useEffect, useState} from 'react';
 import {
   validateContent,
@@ -5,7 +6,6 @@ import {
   validateOption,
 } from '../components/Validations';
 
-import {AddUser} from '../helpers/Gestion';
 import Form from '../components/Form';
 import {Teams} from '../helpers/Gestion';
 
@@ -48,15 +48,15 @@ const RegisterScreen = ({props}) => {
 
   return (
     <Form
-      navigation={props.navigation}
+      navigation={props?.navigation}
       title="Usuario"
-      action={AddUser}
+      action={props?.route.params.user ? EditUser : AddUser}
       afterSubmit={handleResult}
       buttonText={props.route.params.user ? "Editar usuario" : "Agregar usuario"}
       fields={{
         name: {
           label: 'Name',
-          value: props.route.params.user.name,
+          value: props?.route.params.user.name,
           input: {
             type: 'text',
           },
@@ -67,7 +67,7 @@ const RegisterScreen = ({props}) => {
         },
         email: {
           label: 'Email',
-          value: props.route.params.user.email,
+          value: props?.route.params.user.email,
           input: {
             type: 'text',
           },
@@ -78,7 +78,7 @@ const RegisterScreen = ({props}) => {
         },
         password: {
           label: 'Password',
-          value: props.route.params.user.password,
+          value: props?.route.params.user.password,
           input: {
             type: 'text',
           },
@@ -89,7 +89,7 @@ const RegisterScreen = ({props}) => {
         },
         session_id: {
           label: 'User Type',
-          value: props.route.params.user.session_id,
+          value: props?.route.params.user.session_id,
           input: {
             type: 'select',
             selectedValue: '',
@@ -103,7 +103,7 @@ const RegisterScreen = ({props}) => {
         },
         team_id: {
           label: 'User Team',
-          value: props.route.params.user.team_id,
+          value: props?.route.params.user.team_id,
           input: {
             type: 'select',
             selectedValue: '',
@@ -113,7 +113,7 @@ const RegisterScreen = ({props}) => {
         },
         eng_level: {
           label: 'English Level',
-          value: props.route.params.user.eng_level,
+          value: props?.route.params.user.eng_level,
           input: {
             type: 'select',
             selectedValue: '',
@@ -128,7 +128,7 @@ const RegisterScreen = ({props}) => {
         },
         tecnic_knowledge: {
           label: 'Tecnic Knowledge',
-          value: props.route.params.user.tecnic_knowledge,
+          value: props?.route.params.user.tecnic_knowledge,
           input: {
             type: 'text',
           },
@@ -139,7 +139,7 @@ const RegisterScreen = ({props}) => {
         },
         cv_link: {
           label: 'CV LINK (Google Drive)',
-          value: props.route.params.user.cv_link,
+          value: props?.route.params.user.cv_link,
           input: {
             type: 'text',
           },

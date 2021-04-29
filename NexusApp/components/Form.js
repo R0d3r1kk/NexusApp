@@ -54,7 +54,8 @@ const Form = ({
         if (isActive) {
           if (data) {
             if (data.error) {
-              await rollBack(navigation);
+              console.log(data.error);
+              await rollBack(navigation, data.error);
             }
           } else {
             if (user) {
