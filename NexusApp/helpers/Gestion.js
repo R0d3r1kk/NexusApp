@@ -1,8 +1,16 @@
 import {get, post} from './ApiHelper';
+
 import {CRU_URL} from '../Settings';
 
 export const Users = () => {
   return get(CRU_URL + 'All?key=users');
+};
+
+export const GetUser = (id, op_responsible_id) => {
+  return post(CRU_URL + 'User', {
+    id,
+    op_responsible_id
+  });
 };
 
 export const AddUser = (

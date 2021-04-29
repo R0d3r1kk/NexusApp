@@ -1,17 +1,18 @@
-import React from 'react';
 import {
-  StyleSheet,
-  Text,
-  SafeAreaView,
   Dimensions,
   RefreshControl,
-  TouchableOpacity,
+  SafeAreaView,
+  StyleSheet,
+  Text,
   TouchableHighlight,
+  TouchableOpacity,
   View,
 } from 'react-native';
-import {Users} from '../helpers/Gestion';
+import {indicatorColor, primaryColor, secondaryColor} from '../Settings';
+
+import React from 'react';
 import {SwipeListView} from 'react-native-swipe-list-view';
-import {primaryColor, secondaryColor, indicatorColor} from '../Settings';
+import {Users} from '../helpers/Gestion';
 
 class Userlist extends React.Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class Userlist extends React.Component {
     this.state = {
       loading: false,
       error: null,
+      all: [],
       users: [],
       admins: [],
       superadmins: [],
@@ -36,6 +38,7 @@ class Userlist extends React.Component {
 
   setLoading = cond => this.setState({loading: cond});
   setUsers = users => this.setState({users: users});
+  setAll = all => this.setState({all: all});
   setAdmins = admins => this.setState({admins: admins});
   setSuperAdmins = sa => this.setState({superadmins: sa});
 
@@ -46,6 +49,7 @@ class Userlist extends React.Component {
     let sa = [],
       ads = [],
       us = [];
+    
     users.forEach((item, i) => {
       switch (item.session_id) {
         case 0:
@@ -73,6 +77,7 @@ class Userlist extends React.Component {
       superadmins: sa,
       admins: ads,
       users: us,
+      all: users
     });
   };
 
@@ -84,11 +89,14 @@ class Userlist extends React.Component {
   };
 
   render() {
+    const {user, navigation} = this.props;
+    
     return (
       <SafeAreaView style={styles.container}>
         <SwipeSectionList
           state={this.state}
           refreshList={this.refreshList}
+          navigation={navigation}
           setUsers={this.setUsers}
           setAdmins={this.setAdmins}
           setSA={this.setSuperAdmins}
@@ -109,11 +117,11 @@ const renderItem = data => (
   </TouchableHighlight>
 );
 
-const renderHiddenItem = (data, rowMap, state, setUsers) => (
+const renderHiddenItem = (data, rowMap, state, setUsers, setAdmins, setSA, navigation) => (
   <View style={styles.rowBack}>
     <TouchableOpacity
       style={[styles.backLeftBtnLeft, styles.backRightBtn]}
-      onPress={() => console.log('edit')}>
+      onPress={() => openRow(rowMap, navigation, data)}>
       <Text style={styles.backTextWhite}>Editar</Text>
     </TouchableOpacity>
     <TouchableOpacity
@@ -123,7 +131,7 @@ const renderHiddenItem = (data, rowMap, state, setUsers) => (
     </TouchableOpacity>
     <TouchableOpacity
       style={[styles.backRightBtn, styles.backRightBtnRight]}
-      onPress={() => deleteRow(rowMap, data.item.key, state, setUsers)}>
+      onPress={() => deleteRow(rowMap, data.item.key, state, setUsers, setAdmins, setSA)}>
       <Text style={styles.backTextWhite}>Eliminar</Text>
     </TouchableOpacity>
   </View>
@@ -133,7 +141,7 @@ const renderSectionHeader = ({section}) => (
   <Text style={styles.sectionHeader}>{section.title}</Text>
 );
 
-const SwipeSectionList = ({state, refreshList, setUsers, setAdmins, setSA}) => {
+const SwipeSectionList = ({state, refreshList, navigation, setUsers, setAdmins, setSA}) => {
   return (
     <View style={styles.container}>
       <SwipeListView
@@ -146,14 +154,13 @@ const SwipeSectionList = ({state, refreshList, setUsers, setAdmins, setSA}) => {
         renderItem={renderItem}
         renderSectionHeader={renderSectionHeader}
         renderHiddenItem={(rowMap, rowKey) =>
-          renderHiddenItem(rowMap, rowKey, state, setUsers, setAdmins, setSA)
+          renderHiddenItem(rowMap, rowKey, state, setUsers, setAdmins, setSA, navigation)
         }
         leftOpenValue={75}
         rightOpenValue={-150}
         previewRowKey={'0'}
         previewOpenValue={-50}
         previewOpenDelay={3000}
-        onRowDidOpen={onRowDidOpen}
         keyExtractor={(item, index) => item.user.user_id}
         enableEmptySections={false}
         refreshControl={
@@ -164,6 +171,14 @@ const SwipeSectionList = ({state, refreshList, setUsers, setAdmins, setSA}) => {
     </View>
   );
 };
+
+const openRow = (rowMap, navigation, data) => {
+    closeRow(rowMap, data.item.key);
+    navigation.push('Home', {
+      screen:'Agregar Usuario',
+      params: { user: data.item.user }
+    });
+}
 
 const closeRow = (rowMap, rowKey) => {
   if (rowMap[rowKey]) {
@@ -196,10 +211,6 @@ const deleteRow = (rowMap, rowKey, state, setUsers, setAdmins, setSA) => {
       setUsers(newData);
       break;
   }
-};
-
-const onRowDidOpen = rowKey => {
-  console.log('This row opened', rowKey);
 };
 
 const styles = StyleSheet.create({

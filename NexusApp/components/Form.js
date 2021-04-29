@@ -1,19 +1,20 @@
-import React, {useState, useEffect} from 'react';
 import {
-  Text,
-  StyleSheet,
   Alert,
   Animated,
-  View,
+  Dimensions,
   Image,
   ScrollView,
-  Dimensions,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
-import {hasValidationError, validateFields} from './Validations';
-import SubmitButton from './SubmitButton';
-import Field from './Field';
-import {primaryColor} from '../Settings';
+import React, {useEffect, useState} from 'react';
 import {getOnlyUser, rollBack} from '../helpers/TokenHelper';
+import {hasValidationError, validateFields} from './Validations';
+
+import Field from './Field';
+import SubmitButton from './SubmitButton';
+import {primaryColor} from '../Settings';
 
 const getInitialState = fieldKeys => {
   const state = {};
@@ -157,7 +158,7 @@ const Form = ({
               field={fields[key]}
               error={validationErrors[key]}
               onChange={onChangeValue}
-              value={values[key]}
+              value={fields[key].value}
             />
           );
         })}

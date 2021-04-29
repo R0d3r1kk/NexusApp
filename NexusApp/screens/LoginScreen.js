@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react';
-import {Alert} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import Form from '../components/Form';
-import {login} from '../helpers/Authentication';
 import {validateContent, validateLength} from '../components/Validations';
+
+import {Alert} from 'react-native';
+import Form from '../components/Form';
 import jwt_decode from 'jwt-decode';
+import {login} from '../helpers/Authentication';
 import {setToken} from '../helpers/TokenHelper';
+import {useNavigation} from '@react-navigation/native';
 
 const LoginScreen = ({props}) => {
   const navigation = useNavigation();
@@ -14,7 +15,7 @@ const LoginScreen = ({props}) => {
     let isActive = true;
     if (isActive) {
       if (nav) {
-        var data = nav.getParam('error', null);
+        var data = nav.navigation.getParam('error', null);
         if (data) {
           if (data.error) {
             Alert.alert('Upss', data.error);

@@ -5914,9 +5914,9 @@ react-native-swipe-list-view@^3.2.6:
   resolved "https://registry.yarnpkg.com/react-native-swipe-list-view/-/react-native-swipe-list-view-3.2.6.tgz#dde8f65dcdc24f50fafc05da9e90b139b1c3b185"
   integrity sha512-FIrLzYjdxpMmD1hinP6bLSVS2eR2bhFdFuaqOJ+6/EuWDqZMBQcL4FLbkIwulMOc39JGdGZAxGExJYs7VKiQeQ==
 
-react-native@0.64.0:
+react-native@^0.64.0:
   version "0.64.0"
-  resolved "https://registry.npmjs.org/react-native/-/react-native-0.64.0.tgz"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.64.0.tgz#c3bde5b638bf8bcf12bae6e094930d39cb942ab7"
   integrity sha512-8dhSHBthgGwAjU+OjqUEA49229ThPMQH7URH0u8L0xoQFCnZO2sZ9Wc6KcbxI0x9KSmjCMFFZqRe3w3QsRv64g==
   dependencies:
     "@jest/create-cache-key-function" "^26.5.0"

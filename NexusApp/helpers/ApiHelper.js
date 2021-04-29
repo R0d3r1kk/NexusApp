@@ -1,7 +1,6 @@
-import {Alert} from 'react-native';
-import {getToken, DeleteStorage, GenerateToken} from './TokenHelper';
 import {AUTH_URL, NKEY} from '../Settings';
-import {encryptData, decryptData} from './CryptoHelper';
+import {DeleteStorage, GenerateToken, getToken} from './TokenHelper';
+import {decryptData, encryptData} from './CryptoHelper';
 
 const getHeaders = async () => {
   //await DeleteStorage();

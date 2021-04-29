@@ -1,21 +1,21 @@
-import React from 'react';
-import {useNavigation} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 import {
-  createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItem,
+  createDrawerNavigator,
 } from '@react-navigation/drawer';
-import {primaryColor} from '../Settings';
 
-import SplashScreen from '../screens/SplashScreen';
+import AccountsScreen from '../screens/AccountsScreen';
+import AddAccountScreen from '../screens/AddAccountScreen';
 import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/LoginScreen';
+import React from 'react';
 import RegisterScreen from '../screens/RegisterScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import AddAccountScreen from '../screens/AddAccountScreen';
+import SplashScreen from '../screens/SplashScreen';
+import {createStackNavigator} from '@react-navigation/stack';
 import {logout} from '../helpers/Authentication';
-import AccountsScreen from '../screens/AccountsScreen';
+import {primaryColor} from '../Settings';
+import {useNavigation} from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -61,8 +61,12 @@ const DrawerStackNavigator = () => {
         activeTintColor: primaryColor,
         itemStyle: {marginVertical: 5},
       }}>
-      <Drawer.Screen name="Usuarios" component={HomeScreen} />
-      <Drawer.Screen name="Agregar Usuario" component={RegisterScreen} />
+      <Drawer.Screen name="Usuarios">
+        {props => <HomeScreen props={props} />}
+      </Drawer.Screen>
+      <Drawer.Screen name="Agregar Usuario">
+        {props => <RegisterScreen props={props} />}
+      </Drawer.Screen>
       <Drawer.Screen name="Cuentas" component={AccountsScreen} />
       <Drawer.Screen name="Agregar Cuenta" component={AddAccountScreen} />
       {/* <Drawer.Screen name="Configuracion" component={SettingsScreen} /> */}

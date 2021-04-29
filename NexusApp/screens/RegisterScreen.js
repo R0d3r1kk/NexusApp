@@ -1,15 +1,15 @@
-import React, {useState, useEffect} from 'react';
-import Form from '../components/Form';
-import {AddUser} from '../helpers/Gestion';
-import {Teams} from '../helpers/Gestion';
-
+import React, {useEffect, useState} from 'react';
 import {
   validateContent,
   validateLength,
   validateOption,
 } from '../components/Validations';
 
-const RegisterScreen = ({navigation}) => {
+import {AddUser} from '../helpers/Gestion';
+import Form from '../components/Form';
+import {Teams} from '../helpers/Gestion';
+
+const RegisterScreen = ({props}) => {
   const [teams, setTeams] = useState([]);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const RegisterScreen = ({navigation}) => {
   const handleResult = result => {
     try {
       if (result) {
-        navigation.navigate('Usuarios');
+        props.navigation.navigate('Usuarios');
       }
     } catch (e) {
       console.log(e);
@@ -48,14 +48,15 @@ const RegisterScreen = ({navigation}) => {
 
   return (
     <Form
-      navigation={navigation}
+      navigation={props.navigation}
       title="Usuario"
       action={AddUser}
       afterSubmit={handleResult}
-      buttonText="Agregar usuario"
+      buttonText={props.route.params.user ? "Editar usuario" : "Agregar usuario"}
       fields={{
         name: {
           label: 'Name',
+          value: props.route.params.user.name,
           input: {
             type: 'text',
           },
@@ -66,6 +67,7 @@ const RegisterScreen = ({navigation}) => {
         },
         email: {
           label: 'Email',
+          value: props.route.params.user.email,
           input: {
             type: 'text',
           },
@@ -76,6 +78,7 @@ const RegisterScreen = ({navigation}) => {
         },
         password: {
           label: 'Password',
+          value: props.route.params.user.password,
           input: {
             type: 'text',
           },
@@ -86,19 +89,21 @@ const RegisterScreen = ({navigation}) => {
         },
         session_id: {
           label: 'User Type',
+          value: props.route.params.user.session_id,
           input: {
             type: 'select',
             selectedValue: '',
             items: [
-              {label: 'Super Admin', value: '0'},
-              {label: 'Admin', value: '1'},
-              {label: 'User', value: '2'},
+              {label: 'Super Admin', value: 0},
+              {label: 'Admin', value: 1},
+              {label: 'User', value: 2},
             ],
           },
           validators: [validateOption],
         },
         team_id: {
           label: 'User Team',
+          value: props.route.params.user.team_id,
           input: {
             type: 'select',
             selectedValue: '',
@@ -108,6 +113,7 @@ const RegisterScreen = ({navigation}) => {
         },
         eng_level: {
           label: 'English Level',
+          value: props.route.params.user.eng_level,
           input: {
             type: 'select',
             selectedValue: '',
@@ -122,6 +128,7 @@ const RegisterScreen = ({navigation}) => {
         },
         tecnic_knowledge: {
           label: 'Tecnic Knowledge',
+          value: props.route.params.user.tecnic_knowledge,
           input: {
             type: 'text',
           },
@@ -132,6 +139,7 @@ const RegisterScreen = ({navigation}) => {
         },
         cv_link: {
           label: 'CV LINK (Google Drive)',
+          value: props.route.params.user.cv_link,
           input: {
             type: 'text',
           },

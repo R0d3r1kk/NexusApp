@@ -1,7 +1,9 @@
-import React from 'react';
+import {Animated, StyleSheet, Text, TextInput, View} from 'react-native';
+import {primaryColor, secondaryColor} from '../Settings';
+
 import RNPickerSelect from 'react-native-picker-select';
-import {secondaryColor, primaryColor} from '../Settings';
-import {Text, TextInput, View, StyleSheet, Animated} from 'react-native';
+import React from 'react';
+
 export default class Field extends React.Component {
   position = new Animated.Value(0);
   constructor(props) {
